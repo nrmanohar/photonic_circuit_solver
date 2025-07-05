@@ -8,38 +8,10 @@ Welcome to photonic_circuit_solver's documentation!
 
 .. grid:: 1 1 2 2
 
-    .. grid-item-card:: Getting Started
-      :margin: 0 3 0 0
-      
-      Learn the basics of using photonic_circuit_solver.
-
-      .. button-link:: ./getting_started.html
-         :color: primary
-         :outline:
-         :expand:
-
-         To the Getting Started Guide
-
-      
-
-    .. grid-item-card::  User Guide
-      :margin: 0 3 0 0
-      
-      An in-depth guide for users.
-
-      .. button-link:: ./user_guide.html
-         :color: primary
-         :outline:
-         :expand:
-
-         To the User Guide
-      
-      
-
     .. grid-item-card:: API Reference
       :margin: 0 3 0 0
       
-      How to use the API of photonic_circuit_solver.
+      The full API for photonic_circuit_solver
 
       .. button-link:: ./api.html
          :color: primary
@@ -50,26 +22,52 @@ Welcome to photonic_circuit_solver's documentation!
 
       
 
-    .. grid-item-card::  Developer Guide
+    .. grid-item-card::  Getting Started (Stabilizer)
       :margin: 0 3 0 0
       
-      How to contribute to photonic_circuit_solver.
+      An in-depth guide for users interested in the stabilizer class and its properties.
 
-      .. button-link:: ./developer_guide.html
+      .. button-link:: ./getting_started_stabilizer.html
          :color: primary
          :outline:
          :expand:
 
-         To the Developer Guide
+         To the guide
+      
+      
+
+    .. grid-item-card:: About
+      :margin: 0 3 0 0
+      
+      About the developers.
+
+      .. button-link:: ./about.html
+         :color: primary
+         :outline:
+         :expand:
+
+         To the about page
+
+      
+
+    .. grid-item-card::  Getting Started (RREF)
+      :margin: 0 3 0 0
+      
+      A guide for using the RREF features
+
+      .. button-link:: ./getting_started_rref.html
+         :color: primary
+         :outline:
+         :expand:
+
+         To the guide
 
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
-   :titlesonly:
+   :caption: Contents:
 
-   getting_started
-   user_guide
+   getting_started_stabilizer
+   getting_started_rref
    api
-   developer_guide
-
+   about
