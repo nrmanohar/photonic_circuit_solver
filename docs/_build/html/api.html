@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Files &mdash; photonic_circuit_solver  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="photonic_circuit_solver.stabilizer" href="autosummary/photonic_circuit_solver.stabilizer.html" />
+    <link rel="prev" title="Getting Started (RREF)" href="getting_started_rref.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            photonic_circuit_solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started_stabilizer.html">Getting Started (Stabilizer)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_rref.html">Getting Started (RREF)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autosummary/photonic_circuit_solver.stabilizer.html">photonic_circuit_solver.stabilizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autosummary/photonic_circuit_solver.circuit.html">photonic_circuit_solver.circuit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#api-documentation">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer"><code class="docutils literal notranslate"><span class="pre">Stabilizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.build_and_measure"><code class="docutils literal notranslate"><span class="pre">Stabilizer.build_and_measure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.circuit_builder"><code class="docutils literal notranslate"><span class="pre">Stabilizer.circuit_builder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.clifford"><code class="docutils literal notranslate"><span class="pre">Stabilizer.clifford()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.clone"><code class="docutils literal notranslate"><span class="pre">Stabilizer.clone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.commuter"><code class="docutils literal notranslate"><span class="pre">Stabilizer.commuter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.draw_circuit"><code class="docutils literal notranslate"><span class="pre">Stabilizer.draw_circuit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.empty_column"><code class="docutils literal notranslate"><span class="pre">Stabilizer.empty_column()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.flip"><code class="docutils literal notranslate"><span class="pre">Stabilizer.flip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.gaussian"><code class="docutils literal notranslate"><span class="pre">Stabilizer.gaussian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.graph_state"><code class="docutils literal notranslate"><span class="pre">Stabilizer.graph_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.linear_independence"><code class="docutils literal notranslate"><span class="pre">Stabilizer.linear_independence()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.new_stab"><code class="docutils literal notranslate"><span class="pre">Stabilizer.new_stab()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.num_qubits"><code class="docutils literal notranslate"><span class="pre">Stabilizer.num_qubits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.qiskit_stabilizers"><code class="docutils literal notranslate"><span class="pre">Stabilizer.qiskit_stabilizers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.report"><code class="docutils literal notranslate"><span class="pre">Stabilizer.report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.row_add"><code class="docutils literal notranslate"><span class="pre">Stabilizer.row_add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.row_commute"><code class="docutils literal notranslate"><span class="pre">Stabilizer.row_commute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.stabilizer_measurement"><code class="docutils literal notranslate"><span class="pre">Stabilizer.stabilizer_measurement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.stabilizers"><code class="docutils literal notranslate"><span class="pre">Stabilizer.stabilizers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.swap"><code class="docutils literal notranslate"><span class="pre">Stabilizer.swap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.tableau"><code class="docutils literal notranslate"><span class="pre">Stabilizer.tableau()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.rref"><code class="docutils literal notranslate"><span class="pre">rref()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.heightfunction"><code class="docutils literal notranslate"><span class="pre">heightfunction()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.plot_height"><code class="docutils literal notranslate"><span class="pre">plot_height()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.num_emitters"><code class="docutils literal notranslate"><span class="pre">num_emitters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.circuit_solver"><code class="docutils literal notranslate"><span class="pre">circuit_solver()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.num_cnots"><code class="docutils literal notranslate"><span class="pre">num_cnots()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.emitter_cnot"><code class="docutils literal notranslate"><span class="pre">emitter_cnot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About this package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">photonic_circuit_solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="files">
+<h1>Files<a class="headerlink" href="#files" title="Link to this heading"></a></h1>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/photonic_circuit_solver.stabilizer.html#module-photonic_circuit_solver.stabilizer" title="photonic_circuit_solver.stabilizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">photonic_circuit_solver.stabilizer</span></code></a></p></td>
+<td><p>Contains the Stabilizer class to represent stabilizer states</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="autosummary/photonic_circuit_solver.circuit.html#module-photonic_circuit_solver.circuit" title="photonic_circuit_solver.circuit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">photonic_circuit_solver.circuit</span></code></a></p></td>
+<td><p>Contains the functions needed to implement the emission circuit solving procedure</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Stabilizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgelist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer" title="Link to this definition"></a></dt>
+<dd><p>This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a bell state. If only the n is given, it will initialize n qubits in the 0 state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>Optional</em><em> (</em><em>if providing edgelist</em><em>)</em>) – Number of qubits</p></li>
+<li><p><strong>stabs</strong> (<em>list</em><em> or </em><em>string</em><em>, </em><em>optional</em><em> (</em><em>initializes zero state by default</em><em>)</em>) – The stabilizers, either in a string or a list, in the format ‘XX,-YY’ or ‘[XX,-YY]’ (case sensitive). Optional</p></li>
+<li><p><strong>edgelist</strong> (<em>list</em>) – A list of edges for a graph state. Optional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>size</strong> – The number of qubits, initial value: n</p></li>
+<li><p><strong>__stabs</strong> – The stabilizers of the state, initial value: stabs (note, this is a dunder attribute, can’t be directly called outside the class. Use the .stabilizers() method instead)</p></li>
+<li><p><strong>tab</strong> – The tableau of the state</p></li>
+<li><p><strong>signvector</strong> – The signvector of the state</p></li>
+<li><p><strong>gauss</strong> – A nxn Gaussian matrix (used for empty_column calculations)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.build_and_measure">
+<span class="sig-name descname"><span class="pre">build_and_measure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.build_and_measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.build_and_measure" title="Link to this definition"></a></dt>
+<dd><p>A circuit to implement the circuit and then to measure the associated stabilizers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A qiskit circuit for measureing stabilizer</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>QuantumCircuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.circuit_builder">
+<span class="sig-name descname"><span class="pre">circuit_builder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.circuit_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.circuit_builder" title="Link to this definition"></a></dt>
+<dd><p>Uses reverse operations to build the stabilizer state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Qiskit circuit that makes the stabilizer</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>QuantumCircuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.clifford">
+<span class="sig-name descname"><span class="pre">clifford</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.clifford"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.clifford" title="Link to this definition"></a></dt>
+<dd><p>Applies a clifford gate to the stabilizer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>string</em>) – The clifford gate to be operated, ‘H’, ‘X’, ‘Y’, ‘Z’, ‘CNOT’, ‘CZ’, or ‘S’</p></li>
+<li><p><strong>q1</strong> (<em>int</em>) – The qubit to operate on, or the control qubit for entangling gates</p></li>
+<li><p><strong>q2</strong> (<em>int</em>) – The qubit to target, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.clone" title="Link to this definition"></a></dt>
+<dd><p>Generates a copy of the stabilizer state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.commuter">
+<span class="sig-name descname"><span class="pre">commuter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.commuter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.commuter" title="Link to this definition"></a></dt>
+<dd><p>Tests whether the stabilizers commute with each other</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether or not they commute</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.draw_circuit">
+<span class="sig-name descname"><span class="pre">draw_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mpl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.draw_circuit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.draw_circuit" title="Link to this definition"></a></dt>
+<dd><p>Draws a circuit that can generate the given stabilizer state (requires matplotlib and pylatexenc package)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>style</strong> (<em>String</em><em>, </em><em>optional. Defaults to 'mpl'</em>) – The type of output, ‘mpl’ for matplotlib, ‘text’ for ASCII drawing, ‘latex_source’ for raw latex output</p></li>
+<li><p><strong>save</strong> (<em>String</em>) – If you want to save the file to something (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.empty_column">
+<span class="sig-name descname"><span class="pre">empty_column</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.empty_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.empty_column" title="Link to this definition"></a></dt>
+<dd><p>Tests whether there are any empty stabilizers (free qubits)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether there is an empty column or not</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.flip">
+<span class="sig-name descname"><span class="pre">flip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.flip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.flip" title="Link to this definition"></a></dt>
+<dd><p>Flips the tableau over</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.gaussian">
+<span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.gaussian" title="Link to this definition"></a></dt>
+<dd><p>Generates an array that contains information about where stabilizers are known</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.graph_state">
+<span class="sig-name descname"><span class="pre">graph_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edgelist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[0,</span> <span class="pre">1],</span> <span class="pre">[1,</span> <span class="pre">2],</span> <span class="pre">[2,</span> <span class="pre">3],</span> <span class="pre">[3,</span> <span class="pre">4],</span> <span class="pre">[4,</span> <span class="pre">0]]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.graph_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.graph_state" title="Link to this definition"></a></dt>
+<dd><p>Generates a graph state based on inputed edgelist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edgelist</strong> (<em>Nested list</em>) – The list of connections, defaults to [[0,1],[1,2],[2,3],[3,4],[4,0]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.linear_independence">
+<span class="sig-name descname"><span class="pre">linear_independence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.linear_independence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.linear_independence" title="Link to this definition"></a></dt>
+<dd><p>Checks if the generators are linearly independent</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.new_stab">
+<span class="sig-name descname"><span class="pre">new_stab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newstabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_commute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.new_stab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.new_stab" title="Link to this definition"></a></dt>
+<dd><p>Resets the stabilizer and new tableau associated with it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em><em> (</em><em>optional</em><em>)</em>) – The size of the new state</p></li>
+<li><p><strong>newstabs</strong> (<em>string</em><em> or </em><em>list</em>) – The new stabilizers</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.num_qubits">
+<span class="sig-name descname"><span class="pre">num_qubits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.num_qubits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.num_qubits" title="Link to this definition"></a></dt>
+<dd><p>Returns the size of the stabilizer (the number of qubits)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The size of the stabilizer</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.qiskit_stabilizers">
+<span class="sig-name descname"><span class="pre">qiskit_stabilizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.qiskit_stabilizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.qiskit_stabilizers" title="Link to this definition"></a></dt>
+<dd><p>Asks Qiskit to return the stabilizers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A qiskit stabilizer state representation</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>StabilizerState (qiskit)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.report">
+<span class="sig-name descname"><span class="pre">report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.report" title="Link to this definition"></a></dt>
+<dd><p>Prints the tableau and the signvector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.row_add">
+<span class="sig-name descname"><span class="pre">row_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.row_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.row_add" title="Link to this definition"></a></dt>
+<dd><p>Multiplies two stabilizers in the tableau together, specifying a new stabilizer, and puts them into the second row</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.row_commute">
+<span class="sig-name descname"><span class="pre">row_commute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stab1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stab2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.row_commute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.row_commute" title="Link to this definition"></a></dt>
+<dd><p>Checks if two stabilizers commute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stab1</strong> (<em>string</em>) – The first stabilizer</p></li>
+<li><p><strong>stab2</strong> (<em>string</em>) – The second stabilizer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the stabilizers commute</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.stabilizer_measurement">
+<span class="sig-name descname"><span class="pre">stabilizer_measurement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.stabilizer_measurement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.stabilizer_measurement" title="Link to this definition"></a></dt>
+<dd><p>A circuit to measure the associated stabilizers of this state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A qiskit circuit for measureing stabilizer</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>QuantumCircuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.stabilizers">
+<span class="sig-name descname"><span class="pre">stabilizers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.stabilizers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.stabilizers" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of the stabilizers of the state, as per the tableau</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of operations to take a standard state to the given stabilizer state</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.swap">
+<span class="sig-name descname"><span class="pre">swap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.swap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.swap" title="Link to this definition"></a></dt>
+<dd><p>Swaps two rows in the stabilizer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r1</strong> – The first row</p></li>
+<li><p><strong>r2</strong> – The second row</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.tableau">
+<span class="sig-name descname"><span class="pre">tableau</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.tableau"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.tableau" title="Link to this definition"></a></dt>
+<dd><p>Converts the stabilizers to a tableau and signvector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list contained the tableau and the signvector</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.rref">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">rref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#rref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.rref" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, implements the RREF gauge procedure (details in doi.org/10.1088/1367-2630/7/1/170)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state on which to implement the RREF gauge procedure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.heightfunction">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">heightfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#heightfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.heightfunction" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The outputs of the height function as a list</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.plot_height">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">plot_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#plot_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.plot_height" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1) and plots it (note, you need Matplotlib installed)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.num_emitters">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_emitters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_emitters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_emitters" title="Link to this definition"></a></dt>
+<dd><p>Given a graph state with a certain fixed ordering, finds the minimal number of emitters required to emit that state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Target photonic stabilizer state</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Minimal number of photons needed to emit the input states</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.circuit_solver">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">circuit_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#circuit_solver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.circuit_solver" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, finds a circuit to generate it from a minimal set of emitters (details in doi.org/10.1038/s41534-022-00522-6)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Procedure to generate the state</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.num_cnots">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_cnots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_cnots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_cnots" title="Link to this definition"></a></dt>
+<dd><p>Given a graph state with a certain fixed ordering, finds the number of emitters-emitter CNOT gates required to emit that state using this implementation of the solving algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Target photonic stabilizer state</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of emitter-emitter CNOT gates needed to emit the input state using this version of the algorithm</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.emitter_cnot">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">emitter_cnot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#emitter_cnot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.emitter_cnot" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, finds the number of emitters and the number of emitter-emitter CNOT gates needed to implement the circuit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the form [emitters,cnots]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started_rref.html" class="btn btn-neutral float-left" title="Getting Started (RREF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autosummary/photonic_circuit_solver.stabilizer.html" class="btn btn-neutral float-right" title="photonic_circuit_solver.stabilizer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Nishad Manohar. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.11.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

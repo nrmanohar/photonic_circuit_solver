@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started (Stabilizer) &mdash; photonic_circuit_solver  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started (RREF)" href="getting_started_rref.html" />
+    <link rel="prev" title="Welcome to photonic_circuit_solver’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            photonic_circuit_solver
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started (Stabilizer)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#theory">Theory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-theory">Group Theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clifford-operations">Clifford Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tableau-formalism">Tableau Formalism</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-inner-workings">The Inner Workings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verification">Verification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clifford-manipulations">Clifford Manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#circuit-builder">Circuit builder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_rref.html">Getting Started (RREF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#api-documentation">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About this package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">photonic_circuit_solver</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started (Stabilizer)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started_stabilizer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started-stabilizer">
+<h1>Getting Started (Stabilizer)<a class="headerlink" href="#getting-started-stabilizer" title="Link to this heading"></a></h1>
+<p>This page details how to get started with photonic_circuit_solver. photonic_circuit_solver is a package designed to help use and manipulate stabilizer states</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>To install photonic_circuit_solver, you will need an environment with the following packages:</p>
+<ul class="simple">
+<li><p>Python 3.8 or superior</p></li>
+<li><p>NumPy</p></li>
+<li><p>Qiskit (Optional)</p></li>
+<li><p>Matplotlib (optional)</p></li>
+<li><p>Pylatexenc (optional)</p></li>
+</ul>
+<p>Note, you only need Matplotlib and Pylatexenc if you want to plot the circuit. If you just want do do computation, or are fine with the circuits being drawn in the shell by qiskit, these are not required.
+Once you have these packages installed, you can install photonic_circuit_solver in the same environment using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">nrmanohar</span><span class="o">/</span><span class="n">photonic_circuit_solver</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">photonic_circuit_solver</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Link to this heading"></a></h2>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Link to this heading"></a></h3>
+<p>Quantum states are very important for the purposes of quantum computing. However, one issue with representing quantum states is that they grow exponentially.</p>
+<div class="math notranslate nohighlight">
+\[N = 2^n\]</div>
+<p>For a standard pure quantum state, the size of the vector needed to represent it grows exponentially. However, there is a solution. It turns out a subset of quantum
+states can be represented by a set of stabilizers rather than a state vector (or a density operator). Suppose we have a unitary operator</p>
+<div class="math notranslate nohighlight">
+\[U = \bigotimes_i^n \sigma_i\]</div>
+<p>Which is a Kronecker product of Pauli operators. Let’s suppose we have some state such that</p>
+<div class="math notranslate nohighlight">
+\[U|\psi\rangle = |\psi\rangle\]</div>
+<p>We say that the operator <span class="math notranslate nohighlight">\(U\)</span> stabilizes the state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>. It turns out, for a stabilizer state, we can represent that state uniquely using <span class="math notranslate nohighlight">\(n\)</span> stabilizers rather than a vector of size <span class="math notranslate nohighlight">\(2^n\)</span>.</p>
+</section>
+<section id="group-theory">
+<h3>Group Theory<a class="headerlink" href="#group-theory" title="Link to this heading"></a></h3>
+<p>For a crash course on group theory, a group is a set of elements with an associated binary operation (ex. the set of integers with the operation of addition) that abide by four properties</p>
+<ol class="arabic simple">
+<li><p>Closed under binary operation.</p></li>
+<li><p>There exists an identity element.</p></li>
+<li><p>For every element of the group, there exists an inverse.</p></li>
+<li><p>The operation is associative.</p></li>
+</ol>
+<div class="line-block">
+<div class="line">Closure means that if we do the binary operation to two elements in the group, the output remains in the group. The identity element is an element of the group that, under operation, leaves the element unchanged (like the number 0 in addition or the identity matrix). The inverse is an element of the group when operated with an element, returns the identity. And associativity just means that the grouping of terms do not matter. We’re not going to go too deep into the math here, but for our purposes the groups we’re using will operate under standard matrix multiplication</div>
+<div class="line">Suppose we have a stabilizer state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>. Let <span class="math notranslate nohighlight">\(N=2^n\)</span> and <span class="math notranslate nohighlight">\(G\)</span> be a group such that</div>
+</div>
+<div class="math notranslate nohighlight">
+\[G = \{P\in P(N):P|\psi\rangle = |\psi\rangle\}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(P(N)\subseteq U(N)\)</span> such that all <span class="math notranslate nohighlight">\(M\in P\)</span> is a tensor product of Pauli matrices. We say this is the stabilizer group for the state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>. If you want, you can prove that <span class="math notranslate nohighlight">\(G\)</span> is in fact a group. However, this doesn’t really help us, since can be a very large set. But we have something else to help us.
+Every group has a set of <em>generators</em>. We denote the set of generators as <span class="math notranslate nohighlight">\(S\)</span>. We denote <span class="math notranslate nohighlight">\(\langle S\rangle\)</span> as the set of all combinations of the elements of <span class="math notranslate nohighlight">\(S\)</span>, and in and of itself form a group. If <span class="math notranslate nohighlight">\(G = \langle S\rangle\)</span>, we say <span class="math notranslate nohighlight">\(S\)</span> generates <span class="math notranslate nohighlight">\(G\)</span>.
+If we choose a generating set carefully, they can form our <em>representation</em> of the state. We can use <span class="math notranslate nohighlight">\(n\)</span> matrices to represent the state instead of a <span class="math notranslate nohighlight">\(2^n\)</span> size vector.</p>
+<p>One important thing to note, the set of stabilizers is not unique. For example, take the standard bell state <span class="math notranslate nohighlight">\(|\psi\rangle = \frac{1}{2}(|00\rangle+|11\rangle)\)</span>. I can generate it’s set of stabilizers from the generating set <span class="math notranslate nohighlight">\(S = \{ZZ,XX\}\)</span>, but I can also generate the same set from the generators <span class="math notranslate nohighlight">\(S=\{XX,-YY\}\)</span></p>
+<p>However, an important caveat, your stabilizers must be ‘independent’ of each other (sort of analogous to Linear Independence). What does that mean? Let’s have a stabilizer state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> with stabilizers <span class="math notranslate nohighlight">\(\{g_1,g_2\ldots g_m\}\)</span></p>
+<p>If we generate a group from them we get <span class="math notranslate nohighlight">\(G = \langle g_1,g_2\ldots g_m\rangle\)</span></p>
+<p>Here’s the key, let’s generate a group <span class="math notranslate nohighlight">\(G' = \langle g_1\ldots g_{i-1},g_{i+1}\ldots g_n\rangle\)</span> where we removed one arbitrary generator. No matter which generater we removed, <span class="math notranslate nohighlight">\(G'\subset G\)</span>. In other words, removing one of the generators reduces the size of your group. If this is true, we say our generators are ‘independant.’</p>
+<p>For large states, it’s hard to determine by inspection. However, this package comes pre-built with verification for independence of generators.</p>
+</section>
+<section id="clifford-operations">
+<h3>Clifford Operations<a class="headerlink" href="#clifford-operations" title="Link to this heading"></a></h3>
+<p>The Clifford group are the set of all operations that can be formed using CNOT, Phase (denoted as <span class="math notranslate nohighlight">\(S\)</span> in the package), and Hadamard Gates. It turns out, applying a Clifford unitary on a stabilizer state converts it into another stabilizer state. Moreover, any stabilizer state can be realized from any other stabilizer state by means of clifford operations.
+Now this package also allows for more operations. Consider the Pauli rotations</p>
+<div class="math notranslate nohighlight">
+\[\sigma_z = S^2\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma_x = HZH = HS^2H\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma_y = SXS^\dagger=SHZHS^\dagger = SHZHS^3\]</div>
+<p>So every <span class="math notranslate nohighlight">\(\pi\)</span> rotation about an axis is a Clifford operator, and is thus built into our package. Similarly</p>
+<div class="math notranslate nohighlight">
+\[\text{CZ} = (I\otimes H)\text{CNOT}(I\otimes H)\]</div>
+<p>So the default Clifford operations this package utilizes are CNOT, H, S, X, Y, Z, and CZ gates.</p>
+</section>
+<section id="tableau-formalism">
+<h3>Tableau Formalism<a class="headerlink" href="#tableau-formalism" title="Link to this heading"></a></h3>
+<p>This package utilizes a way to represent <span class="math notranslate nohighlight">\(S\)</span> as an <span class="math notranslate nohighlight">\(n\times 2n\)</span> matrix given as</p>
+<div class="math notranslate nohighlight">
+\[T=\left(\begin{array}{c|c}
+X &amp; Z
+\end{array}\right)\]</div>
+<div class="line-block">
+<div class="line">Where the <span class="math notranslate nohighlight">\(i\)</span> th row denotes the <span class="math notranslate nohighlight">\(i\)</span> th stabilizer. Let’s examine the <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> matrices separately. Note these are both square <span class="math notranslate nohighlight">\(n\times n\)</span> matrices. In each of these matrices, the <span class="math notranslate nohighlight">\(j\)</span> th row denotes the <span class="math notranslate nohighlight">\(j\)</span> th qubit.</div>
+<div class="line">Let <span class="math notranslate nohighlight">\(S_{i,j}\)</span> be the <span class="math notranslate nohighlight">\(j\)</span> th Pauli of the <span class="math notranslate nohighlight">\(i\)</span> th stabilizer (For example, if <span class="math notranslate nohighlight">\(S_1=XZ\)</span> and <span class="math notranslate nohighlight">\(S_2=ZX\)</span>, then <span class="math notranslate nohighlight">\(S_{1,1}=X\)</span> and <span class="math notranslate nohighlight">\(S_{2,1}=Z\)</span>). We denote the following using our Tableau</div>
+</div>
+<ol class="arabic simple">
+<li><p>We denote <span class="math notranslate nohighlight">\(S_{i,j}=I\)</span> as <span class="math notranslate nohighlight">\(X_{i,j}=0\)</span> and <span class="math notranslate nohighlight">\(Z_{i,j}=0\)</span></p></li>
+<li><p>We denote <span class="math notranslate nohighlight">\(S_{i,j}=Z\)</span> as <span class="math notranslate nohighlight">\(X_{i,j}=0\)</span> and <span class="math notranslate nohighlight">\(Z_{i,j}=1\)</span></p></li>
+<li><p>We denote <span class="math notranslate nohighlight">\(S_{i,j}=X\)</span> as <span class="math notranslate nohighlight">\(X_{i,j}=1\)</span> and <span class="math notranslate nohighlight">\(Z_{i,j}=0\)</span></p></li>
+<li><p>We denote <span class="math notranslate nohighlight">\(S_{i,j}=Y\)</span> as <span class="math notranslate nohighlight">\(X_{i,j}=1\)</span> and <span class="math notranslate nohighlight">\(Z_{i,j}=1\)</span></p></li>
+</ol>
+<p>However, if you remember, a set of stabilizers for the standard bell state is <span class="math notranslate nohighlight">\(S=\{XX,-YY\}\)</span>. Note the second stabilizer is <span class="math notranslate nohighlight">\(-YY\)</span>. To account for this, we define a signvector, which denotes the sign of the <span class="math notranslate nohighlight">\(i\)</span> th stabilizer. So with the signvector, we can denote this state as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}T=\left(\begin{array}{cc|cc|c}
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1
+\end{array}\right)\end{split}\]</div>
+<div class="line-block">
+<div class="line">Where the last column represents the signvector.</div>
+<div class="line">In this package, we use a numpy array to represent our Tableau. As such, we index from 0 to <span class="math notranslate nohighlight">\(n-1\)</span> rather than from 1 to <span class="math notranslate nohighlight">\(n\)</span>, and the signvector is a separate entity from the tableau</div>
+</div>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>Here’s a sample code with the photonic_circuit_solver package</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photonic_circuit_solver</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">()</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>As you can see, this is the tableau for the standard bell state. However, this isn’t that useful. If you want to initialize <span class="math notranslate nohighlight">\(n\)</span> qubits in the <span class="math notranslate nohighlight">\(|0\rangle\)</span> state, we can instead say</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Let’s do an example, building the GHZ state</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We will then apply a Hadamard to the first qubit</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We then apply two CNOTs</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;cnot&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;cnot&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which generates the final tableau of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>However, if we have a complicated tableau, it might be hard to figure out what it’s saying. Consider a state with the following tableau</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>It’s hard to make any sense of that. Fortunately, we have a method for that! If we had a state with the associated tableau, we can put</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stabs</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">stabilizers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stabs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and that generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;XZZXI&#39;</span><span class="p">,</span> <span class="s1">&#39;IXZZX&#39;</span><span class="p">,</span> <span class="s1">&#39;XIXZZ&#39;</span><span class="p">,</span> <span class="s1">&#39;-ZXIXZ&#39;</span><span class="p">,</span> <span class="s1">&#39;XXXXX&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">which is a lot easier to understand.</div>
+<div class="line">Now, this might be cool, but how does one realize these states on a physical quantum computer. Our circuit comes with a circuit builder! Let’s say our set of stabilizers are <span class="math notranslate nohighlight">\(S=\{XZZXI, IXZZX, XIXZZ, ZXIXZ, ZZZZZ\}\)</span> (this is the logical 0 state in the 5 qubit error correction code)</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">new_stab</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s2">&quot;XZZXI,IXZZX,XIXZZ,ZXIXZ,ZZZZZ&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">circuit_builder</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     ┌───┐                                     ┌───┐
+q_0: ┤ H ├────────────■───■───■────────────────┤ X ├──■──
+     ├───┤            │   │   │ ┌───┐          └─┬─┘  │
+q_1: ┤ H ├──────■──■──┼───┼───■─┤ X ├───────■────┼────┼──
+     ├───┤      │  │  │   │     └─┬─┘       │    │    │
+q_2: ┤ H ├──■───┼──■──┼───■───────┼────■────┼────■────┼──
+     ├───┤  │   │     │           │  ┌─┴─┐  │       ┌─┴─┐
+q_3: ┤ H ├──■───■─────■───■───────■──┤ X ├──┼───────┤ X ├
+     ├───┤┌───┐         ┌─┴─┐        └───┘┌─┴─┐     └───┘
+q_4: ┤ H ├┤ H ├─────────┤ X ├─────────────┤ X ├──────────
+     └───┘└───┘         └───┘             └───┘
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">But suppose you don’t want to operate just in the terminal, or you want to save your circuit, or you want to just make it look nicer. The package has another method that makes this process streamlined (you will need the pylatexenc and matplotlib packages to do this).</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">draw_circuit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<a class="reference internal image-reference" href="_images/Plot1.jpeg"><img alt="Circuit for the logical 0 state of the 5 qubit error correction code" src="_images/Plot1.jpeg" style="width: 600px;" />
+</a>
+<p>One of the most used applications of stabilizer formalism is defining and manipulating graph states. This package comes with that too!</p>
+<p>We need an edgelist</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">edgelist</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Each sublist represents a connection, between the two qubits numbered (indexed from 0 to <span class="math notranslate nohighlight">\(n\)</span>)</p>
+<p>Now if type</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">()</span>
+<span class="n">state</span><span class="o">.</span><span class="n">graph_state</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">draw_circuit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Generates the output</p>
+<a class="reference internal image-reference" href="_images/Plot2.jpeg"><img alt="A graph state with edges (0,1), (1,2), (2,3), (3,4), (4,5), and (5,0)" src="_images/Plot2.jpeg" style="width: 500px;" />
+</a>
+<div class="line-block">
+<div class="line">Now let’s look at stabilizer measurements. Let’s make our stabilizer object</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;XX,-YY&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For both of the following examples. Now I want the circuit that measures the associated stabilizers. For that, I’ll use the stabilizer_measurement() method</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">circ</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stabilizer_measurement</span><span class="p">()</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<a class="reference internal image-reference" href="_images/Plot3.jpeg"><img alt="Stabilizer Measurement for XX and -YY" src="_images/Plot3.jpeg" style="width: 600px;" />
+</a>
+<p>Note, if your state is generated properly, the stabilizer measurement should always return 0’s, and the code is set up as such.</p>
+<p>Now if I want to build the state from a completely uninitialized state. I can use the build_and_measure() method. Continuing from the block above</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">circ</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">build_and_measure</span><span class="p">()</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<a class="reference internal image-reference" href="_images/Plot4.jpeg"><img alt="Generates the state associated with XX and -YY, then does the stabilizer measurement for XX and -YY" src="_images/Plot4.jpeg" style="width: 700px;" />
+</a>
+<p>For graph list, we can use the edgelist constructor. Let’s make a hexagonal ring</p>
+<a class="reference internal image-reference" href="_images/Plot5.jpg"><img alt="Hexagonal Ring graph" src="_images/Plot5.jpg" style="width: 400px;" />
+</a>
+<p>This corresponds to an edgelist of [0,1;1,2;2,3;3,4;4,5;5,0]</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">(</span><span class="n">edgelist</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which generates the output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If we write</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stabs</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">stabilizers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stabs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We get</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;XZIIZ&#39;</span><span class="p">,</span> <span class="s1">&#39;ZXZII&#39;</span><span class="p">,</span> <span class="s1">&#39;IZXZI&#39;</span><span class="p">,</span> <span class="s1">&#39;IIZXZ&#39;</span><span class="p">,</span> <span class="s1">&#39;ZIIZX&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="the-inner-workings">
+<h2>The Inner Workings<a class="headerlink" href="#the-inner-workings" title="Link to this heading"></a></h2>
+<p>This section is more about the code of the package rather than the theory. Reading this section is not necessary for a background to use the package</p>
+<section id="verification">
+<h3>Verification<a class="headerlink" href="#verification" title="Link to this heading"></a></h3>
+<p>Since a lot of this package is self redundant, there needs to be a lot of verification to make sure your stabilizers are still up to standard</p>
+<p>The first check is done by numpy itself. If your stabilizers don’t form the right dimensions, it’ll break numpy and return a numpy error.</p>
+<p>The first real check done is to check whether the number of Pauli’s in a stabilizer matches the number of stabilizers</p>
+<p>The second check done by the package is an empty column check. That basically means whether or not you have a free qubit, which is not a unique state.</p>
+<p>The third check is commuter check, which would take <span class="math notranslate nohighlight">\(\mathcal{O}(n^2)\)</span> time, checks that each stabilizer commutes with each other stabilizer.</p>
+<p>The fourth and final check is linear independence. There’s a theorem in Nielson and Chuang that says the generators are independent if and only if the rows of the tableau are linearly independent. Utilizing them in conjunction will force all of our stabilizers to be valid to describe a unique state.</p>
+</section>
+<section id="clifford-manipulations">
+<h3>Clifford Manipulations<a class="headerlink" href="#clifford-manipulations" title="Link to this heading"></a></h3>
+<p>Clifford manipulations on Tableau are known, so the package just implements them. There are many papers and textbooks that have them described, the only work done by hand was checking signs.</p>
+</section>
+<section id="circuit-builder">
+<h3>Circuit builder<a class="headerlink" href="#circuit-builder" title="Link to this heading"></a></h3>
+<p>This is the most challenging and difficult part of the package. The basic idea is to utilize the fact that every stabilizer state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span> can be converted to a graph state <span class="math notranslate nohighlight">\(\ket{g}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi}\overset{\text{Clifford}}{\rightarrow} \ket{g}\]</div>
+<p>And graph states have known generation schemes that if you undo gets you from the graph state <span class="math notranslate nohighlight">\(\ket{g}\)</span> the <span class="math notranslate nohighlight">\(\ket{0}^{\otimes n}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\ket{g}\overset{\text{Clifford}}{\rightarrow}\ket{0}^{\otimes n}\]</div>
+<p>So the idea is to combine them to obtain a set of transformations that transforms</p>
+<div class="math notranslate nohighlight">
+\[\ket{\psi}\overset{\text{Clifford}}{\rightarrow}\ket{0}^{\otimes n}\]</div>
+<p>Then if you reverse the order of the transformations (and replace any <span class="math notranslate nohighlight">\(S\)</span> with <span class="math notranslate nohighlight">\(S^\dagger\)</span>) you get the generation scheme from the <span class="math notranslate nohighlight">\(\ket{0}^{\otimes n}\)</span> to the target stabilizer state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span></p>
+<p>However, systematically converting from a stabilizer state to a graph state is non-trivial. There are various steps the algorithm takes relating to manipulating the tableau to convert it to a graph state, but since graph states have very well defined Tableau representations, a failure is heralded.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to photonic_circuit_solver’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started_rref.html" class="btn btn-neutral float-right" title="Getting Started (RREF)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Nishad Manohar. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.11.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -63,7 +63,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+#docs/_build/
 
 # PyBuilder
 target/
@@ -119,6 +119,6 @@ ENV/
 *profraw
 
 # In-tree generated files
-*/_version.py
+#*/_version.py
 # Cookiecutter-CMS Test Artifacts
 /tests/CI_files
