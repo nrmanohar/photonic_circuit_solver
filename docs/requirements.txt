@@ -1,0 +1,7 @@
+numpy
+matplotlib
+qiskit
+sphinx_rtd_theme
+pydata-sphinx-theme
+sphinx-design
+sphinx-copybutton
