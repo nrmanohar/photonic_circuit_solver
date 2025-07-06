@@ -1,7 +1,7 @@
 photonic_circuit_solver
 ==============================
 [//]: # (Badges)
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://stabilizer-project.readthedocs.io/en/latest/)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://photonic-circuit-solver.readthedocs.io/en/latest/)
 [![GitHub Actions Build Status](https://github.com/nrmanohar/photonic_circuit_solver/workflows/CI/badge.svg)](https://github.com/nrmanohar/photonic_circuit_solver/actions?query=workflow%3ACI)
 
 
