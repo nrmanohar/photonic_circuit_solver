@@ -426,7 +426,7 @@ class Stabilizer:
         elif row1>= self.size or row2>=self.size:
             pass
         else:
-            phase_tracker = 1
+            phase_tracker = 0
             for i in range(self.size):
                 if self.tab[row1,i]==0 and self.tab[row1,i+self.size]==0:
                     pass
@@ -440,22 +440,22 @@ class Stabilizer:
                 else:
                     if self.tab[row1,i]==0 and self.tab[row1,i+self.size]==1:
                         if self.tab[row2,i]==1 and self.tab[row2,i+self.size]==0:
-                            phase_tracker = phase_tracker*complex(1j)
+                            phase_tracker += 1
                         else:
-                            phase_tracker = phase_tracker*complex(-1j)
+                            phase_tracker -= 1
                     elif self.tab[row1,i]==1 and self.tab[row1,i+self.size]==0:
                         if self.tab[row2,i]==0 and self.tab[row2,i+self.size]==1:
-                            phase_tracker = phase_tracker*complex(-1j)
+                            phase_tracker -= 1
                         else:
-                            phase_tracker = phase_tracker*complex(1j)
+                            phase_tracker +=1
                     else:
                         if self.tab[row2,i]==0 and self.tab[row2,i+self.size]==1:
-                            phase_tracker = phase_tracker*complex(1j)
+                            phase_tracker += 1
                         else:
-                            phase_tracker = phase_tracker*complex(-1j)
+                            phase_tracker -= 1
                     self.tab[row2,i] = (self.tab[row2,i]+self.tab[row1,i])%2
                     self.tab[row2,i+self.size] = (self.tab[row2,i+self.size]+self.tab[row1,i+self.size])%2
-        phase_tracker = (1-1*np.real(phase_tracker))/2
+        phase_tracker = (phase_tracker%4)/2
         self.signvector[row2] = (self.signvector[row1]+self.signvector[row2]+phase_tracker)%2
                 
 
@@ -471,6 +471,11 @@ class Stabilizer:
         rev_operations = []
 
         broken = False
+
+        try:
+            from qiskit import QuantumCircuit
+        except:
+            raise ImportError('Qiskit failed to Import')
 
         for i in range(self.size):
             if self.tab[i,i]==0:
@@ -555,7 +560,7 @@ class Stabilizer:
             elif rev_operations[i][0]=='Z':
                 circuit.z(rev_operations[i][1])
             elif rev_operations[i][0]=='CNOT':
-                circuit.cnot(rev_operations[i][1],rev_operations[i][2])
+                circuit.cx(rev_operations[i][1],rev_operations[i][2])
             elif rev_operations[i][0]=='CZ':
                 circuit.cz(rev_operations[i][1],rev_operations[i][2])
         return circuit
@@ -618,6 +623,10 @@ class Stabilizer:
         :rtype: QuantumCircuit
 
         """
+        try:
+            from qiskit import QuantumCircuit, QuantumRegister,ClassicalRegister
+        except:
+            raise ImportError('Qiskit not installed')
         qs = QuantumCircuit(2*self.size)
         bits = []
         for i in range(self.size):
