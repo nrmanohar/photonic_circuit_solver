@@ -3,5 +3,7 @@
 # Add imports here
 from .stabilizer import *
 
+from .circuit import *
+
 
 from ._version import __version__

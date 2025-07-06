@@ -4,6 +4,7 @@ Files
    :toctree: autosummary
 
    photonic_circuit_solver.stabilizer
+   photonic_circuit_solver.circuit
 
 API Documentation
 =================
