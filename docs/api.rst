@@ -5,6 +5,7 @@ Files
 
    photonic_circuit_solver.stabilizer
    photonic_circuit_solver.circuit
+   photonic_circuit_solver.supplementalfuncs
 
 API Documentation
 =================
@@ -12,6 +13,9 @@ API Documentation
 .. currentmodule:: photonic_circuit_solver
 
 .. autoclass:: Stabilizer 
+   :members:
+
+.. autoclass:: Graph
    :members:
 
 .. autofunction:: rref
@@ -27,4 +31,19 @@ API Documentation
 .. autofunction:: num_cnots
 
 .. autofunction:: emitter_cnot
+
+.. autofunction:: apply
+
+.. autofunction:: tensor
+
+.. autofunction:: dephase
+
+.. autoclass:: Rx
+   :members:
+
+.. autoclass:: Ry
+   :members:
+
+.. autoclass:: Rz
+   :members:
 

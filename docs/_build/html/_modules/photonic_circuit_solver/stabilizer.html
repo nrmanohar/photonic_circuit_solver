@@ -105,10 +105,13 @@
 <span class="sd">    :cvar gauss: A nxn Gaussian matrix (used for empty_column calculations)</span>
 <span class="sd">    </span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">stabs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">edgelist</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">stabs</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">edgelist</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stabs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edgelist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty Constructor&#39;</span><span class="p">)</span>
+        
         <span class="k">if</span> <span class="n">edgelist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>    
             <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stabs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
@@ -153,7 +156,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">graph_state</span><span class="p">(</span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">edgelist</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the stabilizers as a string and outputs them</span>
 
@@ -164,7 +167,7 @@
             <span class="n">stabstring</span><span class="o">+=</span><span class="s1">&#39;, &#39;</span><span class="o">+</span><span class="n">stabs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">stabstring</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the stabilizers as a string and outputs them</span>
 
@@ -175,7 +178,7 @@
             <span class="n">stabstring</span><span class="o">+=</span><span class="s1">&#39;, &#39;</span><span class="o">+</span><span class="n">stabs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">stabstring</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">toggler</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__stab</span><span class="p">)):</span>
             <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -186,7 +189,7 @@
 
 <div class="viewcode-block" id="Stabilizer.commuter">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.commuter">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">commuter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">commuter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether the stabilizers commute with each other</span>
 
@@ -209,7 +212,7 @@
 
 <div class="viewcode-block" id="Stabilizer.num_qubits">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.num_qubits">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the size of the stabilizer (the number of qubits)</span>
 
@@ -221,7 +224,7 @@
     
 <div class="viewcode-block" id="Stabilizer.graph_state">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.graph_state">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">graph_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">edgelist</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">graph_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">edgelist</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">]]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a graph state based on inputed edgelist</span>
 
@@ -251,7 +254,7 @@
     
 <div class="viewcode-block" id="Stabilizer.tableau">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.tableau">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tableau</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tableau</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the stabilizers to a tableau and signvector</span>
 
@@ -281,11 +284,11 @@
 
 <div class="viewcode-block" id="Stabilizer.stabilizers">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.stabilizers">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">stabilizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stabilizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of the stabilizers of the state, as per the tableau</span>
 
-<span class="sd">        :return: A list of operations to take a standard state to the given stabilizer state</span>
+<span class="sd">        :return: A list of stabilizers</span>
 <span class="sd">        :rtype: list  </span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -308,7 +311,7 @@
 
 <div class="viewcode-block" id="Stabilizer.new_stab">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.new_stab">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">new_stab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">newstabs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_commute</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">new_stab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">newstabs</span><span class="p">:</span> <span class="nb">str</span><span class="o">|</span><span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the stabilizer and new tableau associated with it</span>
 
@@ -360,7 +363,7 @@
 
 <div class="viewcode-block" id="Stabilizer.clifford">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.clifford">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">clifford</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">type</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clifford</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span><span class="n">q1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">q2</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Applies a clifford gate to the stabilizer</span>
 
@@ -413,14 +416,14 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="n">q2</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;cnot&#39;</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">q2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clifford</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="n">q2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid gate inputted. Valid types are &#39;H&#39; for Hadamard, &#39;S&#39; for the phase gate, &#39;CNOT&#39; for the Control Not, &#39;CZ&#39; for the Control Z.&quot;</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="Stabilizer.row_commute">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.row_commute">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">row_commute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stab1</span><span class="p">,</span> <span class="n">stab2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">row_commute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stab1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">stab2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if two stabilizers commute</span>
 
@@ -448,7 +451,16 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
     
-    <span class="k">def</span><span class="w"> </span><span class="nf">measurement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stabilizers</span><span class="p">,</span> <span class="n">outcomes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Stabilizer.measurement">
+<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.measurement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">measurement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stabilizers</span><span class="p">:</span> <span class="nb">list</span><span class="o">|</span><span class="nb">str</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implements a measurement of a Pauli string with a specified outcome</span>
+
+<span class="sd">        :param stabilizers: The set of stabilizers that were measured, in order</span>
+<span class="sd">        :param outcomes: The outcomes of these measurements (defaults to zero for all)</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">stabilizers</span> <span class="o">=</span> <span class="n">stabilizers</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
@@ -474,7 +486,8 @@
             <span class="k">if</span> <span class="n">outcomes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
                 <span class="n">stabilizers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">stabilizers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="n">stabs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="n">stabilizers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">new_stab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">stabs</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_stab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">stabs</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Stabilizer.report">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.report">[docs]</a>
@@ -504,7 +517,7 @@
     
 <div class="viewcode-block" id="Stabilizer.empty_column">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.empty_column">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">empty_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">empty_column</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether there are any empty stabilizers (free qubits)</span>
 
@@ -537,7 +550,7 @@
 
 <div class="viewcode-block" id="Stabilizer.row_add">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.row_add">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">row_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row1</span><span class="p">,</span><span class="n">row2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">row_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">row2</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Multiplies two stabilizers in the tableau together, specifying a new stabilizer, and puts them into the second row</span>
 
@@ -547,7 +560,7 @@
         <span class="k">elif</span> <span class="n">row1</span><span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">or</span> <span class="n">row2</span><span class="o">&gt;=</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
                     <span class="k">pass</span>
@@ -561,22 +574,22 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">+=</span> <span class="mi">1</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">-=</span> <span class="mi">1</span>
                     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">-=</span> <span class="mi">1</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">+=</span><span class="mi">1</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">+=</span> <span class="mi">1</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">phase_tracker</span> <span class="o">=</span> <span class="n">phase_tracker</span><span class="o">*</span><span class="nb">complex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">phase_tracker</span> <span class="o">-=</span> <span class="mi">1</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="p">])</span><span class="o">%</span><span class="mi">2</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">row1</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">])</span><span class="o">%</span><span class="mi">2</span>
-        <span class="n">phase_tracker</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">phase_tracker</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">phase_tracker</span> <span class="o">=</span> <span class="p">(</span><span class="n">phase_tracker</span><span class="o">%</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">signvector</span><span class="p">[</span><span class="n">row2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">signvector</span><span class="p">[</span><span class="n">row1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">signvector</span><span class="p">[</span><span class="n">row2</span><span class="p">]</span><span class="o">+</span><span class="n">phase_tracker</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span></div>
 
                 
@@ -585,7 +598,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.circuit_builder">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">circuit_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Uses reverse operations to build the stabilizer state</span>
+<span class="sd">        Uses reverse operations to build the stabilizer state (requires qiskit)</span>
 
 <span class="sd">        :return: A Qiskit circuit that makes the stabilizer</span>
 <span class="sd">        :rtype: QuantumCircuit        </span>
@@ -595,6 +608,11 @@
         <span class="n">rev_operations</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="n">broken</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">qiskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantumCircuit</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;Qiskit failed to Import&#39;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
@@ -679,7 +697,7 @@
             <span class="k">elif</span> <span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Z&#39;</span><span class="p">:</span>
                 <span class="n">circuit</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;CNOT&#39;</span><span class="p">:</span>
-                <span class="n">circuit</span><span class="o">.</span><span class="n">cnot</span><span class="p">(</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;CZ&#39;</span><span class="p">:</span>
                 <span class="n">circuit</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">rev_operations</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">circuit</span></div>
@@ -689,7 +707,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.draw_circuit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw_circuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">save</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Draws a circuit that can generate the given stabilizer state (requires matplotlib and pylatexenc package)</span>
+<span class="sd">        Draws a circuit that can generate the given stabilizer state (requires qiskit, matplotlib and pylatexenc package)</span>
 
 <span class="sd">        :param style: The type of output, &#39;mpl&#39; for matplotlib, &#39;text&#39; for ASCII drawing, &#39;latex_source&#39; for raw latex output</span>
 <span class="sd">        :type style: String, optional. Defaults to &#39;mpl&#39;</span>
@@ -723,7 +741,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.qiskit_stabilizers">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">qiskit_stabilizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Asks Qiskit to return the stabilizers</span>
+<span class="sd">        Asks Qiskit to return the stabilizers (requires qiskit)</span>
 
 <span class="sd">        :return: A qiskit stabilizer state representation</span>
 <span class="sd">        :rtype: StabilizerState (qiskit)</span>
@@ -745,12 +763,16 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.stabilizer_measurement">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stabilizer_measurement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A circuit to measure the associated stabilizers of this state</span>
+<span class="sd">        A circuit to measure the associated stabilizers of this state (requires qiskit)</span>
 
 <span class="sd">        :return: A qiskit circuit for measureing stabilizer</span>
 <span class="sd">        :rtype: QuantumCircuit</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">qiskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantumCircuit</span><span class="p">,</span> <span class="n">QuantumRegister</span><span class="p">,</span><span class="n">ClassicalRegister</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;Qiskit not installed&#39;</span><span class="p">)</span>
         <span class="n">qs</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="n">bits</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
@@ -785,7 +807,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.build_and_measure">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build_and_measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A circuit to implement the circuit and then to measure the associated stabilizers.</span>
+<span class="sd">        A circuit to implement the circuit and then to measure the associated stabilizers (requires qiskit).</span>
 
 <span class="sd">        :return: A qiskit circuit for measureing stabilizer</span>
 <span class="sd">        :rtype: QuantumCircuit</span>
@@ -824,7 +846,7 @@
 
 <div class="viewcode-block" id="Stabilizer.swap">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer.swap">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span><span class="n">r2</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Swaps two rows in the stabilizer</span>
 

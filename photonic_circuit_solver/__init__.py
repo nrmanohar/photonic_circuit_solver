@@ -5,5 +5,6 @@ from .stabilizer import *
 
 from .circuit import *
 
+from .supplementalfuncs import *
 
 from ._version import __version__

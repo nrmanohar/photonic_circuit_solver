@@ -111,7 +111,7 @@ def partial_height(state,index):
 
 def plot_height(state):
     """
-    Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1) and plots it (note, you need Matplotlib installed)
+    Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1) and plots it (need matplotlib installed)
 
     :param state: Stabilizer state from which to calculate the height function
     :type state: Stabilizer

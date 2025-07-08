@@ -22,10 +22,13 @@ class Stabilizer:
     :cvar gauss: A nxn Gaussian matrix (used for empty_column calculations)
     
     '''
-    def __init__(self, n = None, stabs = None, edgelist = None):
+    def __init__(self, n: int = None, stabs: str | list = None, edgelist: list[list] = None):
         """Constructor method
 
         """
+        if n is None and stabs is None and edgelist is None:
+            raise ValueError('Empty Constructor')
+        
         if edgelist is None:    
             if n is None and stabs is None:
                 n = 2
@@ -70,7 +73,7 @@ class Stabilizer:
         else:
             self.graph_state(edgelist = edgelist)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns the stabilizers as a string and outputs them
 
@@ -81,7 +84,7 @@ class Stabilizer:
             stabstring+=', '+stabs[i]
         return stabstring
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Returns the stabilizers as a string and outputs them
 
@@ -92,7 +95,7 @@ class Stabilizer:
             stabstring+=', '+stabs[i]
         return stabstring
 
-    def square(self):
+    def square(self) -> bool:
         toggler = True
         for i in range(len(self.__stab)):
             str = self.__stab[i]
@@ -101,7 +104,7 @@ class Stabilizer:
                 return False
         return toggler
 
-    def commuter(self):
+    def commuter(self) -> bool:
         """
         Tests whether the stabilizers commute with each other
 
@@ -121,7 +124,7 @@ class Stabilizer:
                 if toggler%2 != 0:
                     return False
         return True
-    def num_qubits(self):
+    def num_qubits(self) -> int:
         """
         Returns the size of the stabilizer (the number of qubits)
 
@@ -130,7 +133,7 @@ class Stabilizer:
         """
         return self.size
     
-    def graph_state(self,edgelist = [[0,1],[1,2],[2,3],[3,4],[4,0]]):
+    def graph_state(self,edgelist: list[list] = [[0,1],[1,2],[2,3],[3,4],[4,0]]):
         """
         Generates a graph state based on inputed edgelist
 
@@ -157,7 +160,7 @@ class Stabilizer:
         self.tab = tab
         self.signvector = sign
     
-    def tableau(self):
+    def tableau(self) -> list:
         """
         Converts the stabilizers to a tableau and signvector
 
@@ -184,11 +187,11 @@ class Stabilizer:
                 else:
                     raise ValueError("Invalid stabilizer (not a Pauli string)")
         return [tab,sign]
-    def stabilizers(self):
+    def stabilizers(self)-> list[str]:
         """
         Returns a list of the stabilizers of the state, as per the tableau
 
-        :return: A list of operations to take a standard state to the given stabilizer state
+        :return: A list of stabilizers
         :rtype: list  
         
         """
@@ -208,7 +211,7 @@ class Stabilizer:
                     str = str+"Y"
             self.__stab.append(str)
         return self.__stab
-    def new_stab(self,size=None,newstabs=None, ignore_commute = False):
+    def new_stab(self,size: int =None,newstabs: str|list = None):
         """
         Resets the stabilizer and new tableau associated with it
 
@@ -257,7 +260,7 @@ class Stabilizer:
         except:
             raise ValueError("Invalid Inputs, Stabilizers are not independant")
 
-    def clifford(self,type,q1,q2=None):
+    def clifford(self,type: str,q1: int,q2: int=None):
         """
         Applies a clifford gate to the stabilizer
 
@@ -310,11 +313,11 @@ class Stabilizer:
             else:
                 self.clifford('h',q2)
                 self.clifford('cnot',q1,q2)
-                self.clifford('h', q2)
+                self.clifford('h',q2)
         else:
             raise ValueError("Invalid gate inputted. Valid types are 'H' for Hadamard, 'S' for the phase gate, 'CNOT' for the Control Not, 'CZ' for the Control Z.")
     
-    def row_commute(self, stab1, stab2):
+    def row_commute(self, stab1: str, stab2: str) -> bool:
         """
         Checks if two stabilizers commute
 
@@ -341,7 +344,14 @@ class Stabilizer:
         else:
             return False
     
-    def measurement(self, stabilizers, outcomes=None):
+    def measurement(self, stabilizers: list|str, outcomes:list = None):
+        """
+        Implements a measurement of a Pauli string with a specified outcome
+
+        :param stabilizers: The set of stabilizers that were measured, in order
+        :param outcomes: The outcomes of these measurements (defaults to zero for all)
+        
+        """
         try:
             stabilizers = stabilizers.split(',')
         except:
@@ -389,7 +399,7 @@ class Stabilizer:
                 if self.tab[i,j]==1 or self.tab[i,j+self.size]==1:
                     self.gauss[i,j]=1
     
-    def empty_column(self):
+    def empty_column(self) -> bool:
         """
         Tests whether there are any empty stabilizers (free qubits)
 
@@ -416,7 +426,7 @@ class Stabilizer:
         else:
             return False
 
-    def row_add(self,row1,row2):
+    def row_add(self,row1: int,row2: int):
         """
         Multiplies two stabilizers in the tableau together, specifying a new stabilizer, and puts them into the second row
 
@@ -461,7 +471,7 @@ class Stabilizer:
 
     def circuit_builder(self):
         """
-        Uses reverse operations to build the stabilizer state
+        Uses reverse operations to build the stabilizer state (requires qiskit)
 
         :return: A Qiskit circuit that makes the stabilizer
         :rtype: QuantumCircuit        
@@ -567,7 +577,7 @@ class Stabilizer:
 
     def draw_circuit(self, style = 'mpl', save = None):
         """
-        Draws a circuit that can generate the given stabilizer state (requires matplotlib and pylatexenc package)
+        Draws a circuit that can generate the given stabilizer state (requires qiskit, matplotlib and pylatexenc package)
 
         :param style: The type of output, 'mpl' for matplotlib, 'text' for ASCII drawing, 'latex_source' for raw latex output
         :type style: String, optional. Defaults to 'mpl'
@@ -598,7 +608,7 @@ class Stabilizer:
     
     def qiskit_stabilizers(self):
         """
-        Asks Qiskit to return the stabilizers
+        Asks Qiskit to return the stabilizers (requires qiskit)
 
         :return: A qiskit stabilizer state representation
         :rtype: StabilizerState (qiskit)
@@ -617,7 +627,7 @@ class Stabilizer:
 
     def stabilizer_measurement(self):
         """
-        A circuit to measure the associated stabilizers of this state
+        A circuit to measure the associated stabilizers of this state (requires qiskit)
 
         :return: A qiskit circuit for measureing stabilizer
         :rtype: QuantumCircuit
@@ -658,7 +668,7 @@ class Stabilizer:
     
     def build_and_measure(self):
         """
-        A circuit to implement the circuit and then to measure the associated stabilizers.
+        A circuit to implement the circuit and then to measure the associated stabilizers (requires qiskit).
 
         :return: A qiskit circuit for measureing stabilizer
         :rtype: QuantumCircuit
@@ -694,7 +704,7 @@ class Stabilizer:
             qs.measure(i+self.size,i)
         
         return qs
-    def swap(self, r1,r2):
+    def swap(self, r1: int,r2: int):
         """
         Swaps two rows in the stabilizer
 

@@ -32,6 +32,7 @@ def test_basic():
         else:
             indices.append(i)
     assert len(indices)==0
+    
 def test_graph_states():
     state = photonic_circuit_solver.Stabilizer(edgelist = [[i,(i+1)%5] for i in range(5)])
     operations = photonic_circuit_solver.circuit_solver(state)

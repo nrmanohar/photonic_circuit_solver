@@ -1,7 +1,7 @@
 Getting Started (Stabilizer)
 ============================
 
-This page details how to get started with photonic_circuit_solver. photonic_circuit_solver is a package designed to help use and manipulate stabilizer states
+This page details how to get started with photonic_circuit_solver. This page covers the Stabilizer class, designed to help use and manipulate stabilizer states
 
 Installation
 ------------
@@ -12,8 +12,10 @@ To install photonic_circuit_solver, you will need an environment with the follow
 * Qiskit (Optional)
 * Matplotlib (optional)
 * Pylatexenc (optional)
+* Sympy (optional)
 
-Note, you only need Matplotlib and Pylatexenc if you want to plot the circuit. If you just want do do computation, or are fine with the circuits being drawn in the shell by qiskit, these are not required.
+Note, all computational aspects are done in NumPy. You only need Qiskit if you want to use any of the methods that output Qiskit circuits. Similar for the SymPy methods. You only need Matplotlib and Pylatexenc if you want to plot the circuit outside of the shell. If you just want do do computation, or are fine with the circuits being drawn in the shell by qiskit, these are not required.
+
 Once you have these packages installed, you can install photonic_circuit_solver in the same environment using
 ::
 
@@ -233,42 +235,7 @@ and that generates the output
 
     ['XZZXI', 'IXZZX', 'XIXZZ', '-ZXIXZ', 'XXXXX']
 
-| which is a lot easier to understand.
-| Now, this might be cool, but how does one realize these states on a physical quantum computer. Our circuit comes with a circuit builder! Let's say our set of stabilizers are :math:`S=\{XZZXI, IXZZX, XIXZZ, ZXIXZ, ZZZZZ\}` (this is the logical 0 state in the 5 qubit error correction code)
-
-.. code-block:: python
-
-    state.new_stab(5,"XZZXI,IXZZX,XIXZZ,ZXIXZ,ZZZZZ")
-    print(state.circuit_builder())
-
-Generates the output
-
-::
-
-         ┌───┐                                     ┌───┐
-    q_0: ┤ H ├────────────■───■───■────────────────┤ X ├──■──
-         ├───┤            │   │   │ ┌───┐          └─┬─┘  │
-    q_1: ┤ H ├──────■──■──┼───┼───■─┤ X ├───────■────┼────┼──
-         ├───┤      │  │  │   │     └─┬─┘       │    │    │
-    q_2: ┤ H ├──■───┼──■──┼───■───────┼────■────┼────■────┼──
-         ├───┤  │   │     │           │  ┌─┴─┐  │       ┌─┴─┐
-    q_3: ┤ H ├──■───■─────■───■───────■──┤ X ├──┼───────┤ X ├
-         ├───┤┌───┐         ┌─┴─┐        └───┘┌─┴─┐     └───┘
-    q_4: ┤ H ├┤ H ├─────────┤ X ├─────────────┤ X ├──────────
-         └───┘└───┘         └───┘             └───┘
-
-| But suppose you don't want to operate just in the terminal, or you want to save your circuit, or you want to just make it look nicer. The package has another method that makes this process streamlined (you will need the pylatexenc and matplotlib packages to do this).
-
-.. code-block:: python
-
-    state.draw_circuit()
-
-Which generates the output
-
-.. image:: Plot1.jpeg
-  :width: 600
-  :alt: Circuit for the logical 0 state of the 5 qubit error correction code
-  
+which is a lot easier to understand.
 
 One of the most used applications of stabilizer formalism is defining and manipulating graph states. This package comes with that too!
 
@@ -278,7 +245,7 @@ We need an edgelist
 
     edgelist = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]]
 
-Each sublist represents a connection, between the two qubits numbered (indexed from 0 to :math:`n`)
+Each sublist represents a connection, between the two qubits numbered (indexed from 0 to :math:`n`-1)
 
 Now if type
 
@@ -286,13 +253,12 @@ Now if type
 
     state = Stabilizer()
     state.graph_state(edgelist)
-    state.draw_circuit()
 
-Generates the output
+This generates a stabilizer state equivalent to doing the following circuit on the computational zero state
 
 .. image:: Plot2.jpeg
   :width: 500
-  :alt: A graph state with edges (0,1), (1,2), (2,3), (3,4), (4,5), and (5,0)
+  :alt: A circuit generating a graph state with edges (0,1), (1,2), (2,3), (3,4), (4,5), and (5,0)
 
 
 | Now let's look at stabilizer measurements. Let's make our stabilizer object
@@ -320,28 +286,14 @@ Which generates the output
   
 
 Note, if your state is generated properly, the stabilizer measurement should always return 0's, and the code is set up as such.
-
-Now if I want to build the state from a completely uninitialized state. I can use the build_and_measure() method. Continuing from the block above
-
-.. code-block:: python
-
-    circ = state.build_and_measure()
-    circ.draw('mpl')
-    plt.show()
-
-Which generates the output
-
-.. image:: Plot4.jpeg
-  :width: 700
-  :alt: Generates the state associated with XX and -YY, then does the stabilizer measurement for XX and -YY
   
-For graph list, we can use the edgelist constructor. Let's make a hexagonal ring
+For making graph states, we can use the edgelist constructor directly at the initialization step. Let's make a hexagonal ring
 
 .. image:: Plot5.jpg
   :width: 400
   :alt: Hexagonal Ring graph
 
-This corresponds to an edgelist of [0,1;1,2;2,3;3,4;4,5;5,0]
+This corresponds to an edgelist of [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]]
 
 .. code-block:: python
 
@@ -383,7 +335,7 @@ Since a lot of this package is self redundant, there needs to be a lot of verifi
 
 The first check is done by numpy itself. If your stabilizers don't form the right dimensions, it'll break numpy and return a numpy error.
 
-The first real check done is to check whether the number of Pauli's in a stabilizer matches the number of stabilizers
+The first real check done is to check whether the number of Pauli's in a stabilizer matches the number of stabilizers. As such, this package doesn't encode stabilizer codespaces, which are linear subspaces defined by using less than a full set of generators.
 
 The second check done by the package is an empty column check. That basically means whether or not you have a free qubit, which is not a unique state. 
 
@@ -393,25 +345,12 @@ The fourth and final check is linear independence. There's a theorem in Nielson 
 
 Clifford Manipulations
 ```````````````````````
-Clifford manipulations on Tableau are known, so the package just implements them. There are many papers and textbooks that have them described, the only work done by hand was checking signs.
+Clifford manipulations on Tableau are known, so the package just implements them. There are many papers and textbooks that have them described, but here's how they are implemented. First, lets look at single qubit gates applied to some qubit j
 
-Circuit builder
-`````````````````
-This is the most challenging and difficult part of the package. The basic idea is to utilize the fact that every stabilizer state :math:`\ket{\psi}` can be converted to a graph state :math:`\ket{g}`
+A Pauli gate is the simplest to implement, since applying a Pauli gate doesn't change the stabilizers, just the signvector. This is computationally enforced by going through each generator and looking at the pauli at the jth index. If it is the identity or the same as the Pauli gate being implemented, alter nothing. If its a different Pauli, clip the signvector element associated with that generator.
 
-.. math::
-    \ket{\psi}\overset{\text{Clifford}}{\rightarrow} \ket{g}
+Hadamard gates enforce the following transformations :math:`X\overset{H}{\rightarrow} Z\text{, }Z\overset{H}{\rightarrow} X, Y\overset{H}{\rightarrow} -Y`. This is enforced by swapping the jth column of the X side of the tableau and the jth column of the Z side of the tableau, and if both entries in the kth row are 1, flipping the signvector.
 
-And graph states have known generation schemes that if you undo gets you from the graph state :math:`\ket{g}` the :math:`\ket{0}^{\otimes n}`
+CNOT gates are trickier, but the key thing to note is that CNOT(XI) = XX(CNOT) and CNOT(IZ) = ZZ(CNOT), which we can generalize in the tableau as a bitwise addition of the columns associated with the two qubits, and putting it into the column of the target qubit on the X matrix and into the column of the control qubit in the Z matrix.
 
-.. math::
-    \ket{g}\overset{\text{Clifford}}{\rightarrow}\ket{0}^{\otimes n}
-
-So the idea is to combine them to obtain a set of transformations that transforms
-
-.. math::
-    \ket{\psi}\overset{\text{Clifford}}{\rightarrow}\ket{0}^{\otimes n}
-
-Then if you reverse the order of the transformations (and replace any :math:`S` with :math:`S^\dagger`) you get the generation scheme from the :math:`\ket{0}^{\otimes n}` to the target stabilizer state :math:`\ket{\psi}`
-
-However, systematically converting from a stabilizer state to a graph state is non-trivial. There are various steps the algorithm takes relating to manipulating the tableau to convert it to a graph state, but since graph states have very well defined Tableau representations, a failure is heralded.
+Phase gates don't affect Z Pauli due to commutation, and implement the chain :math:`X\overset{S}{\rightarrow}Y\overset{S}{\rightarrow}-X\overset{S}{\rightarrow}-Y\overset{S}{\rightarrow}X`, which is implemented by a bitwise addition of the jth column of the X matrix into the jth column of the Z matrix, and implementing sign changes if the initial state was stabilized by a Y Pauli.
