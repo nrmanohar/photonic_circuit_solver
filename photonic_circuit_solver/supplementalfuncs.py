@@ -5,17 +5,20 @@ try:
     from sympy.physics.quantum import qapply
     from sympy.physics.quantum.qubit import Qubit, QubitBra, qubit_to_matrix
     from sympy.physics.quantum.gate import IdentityGate, X, Y, Z, H, S, T, CNOT, CPHASE
-    import networkx as nx
-    import matplotlib.pyplot as plt
-    from IPython.display import clear_output
 except:
     class Function:
         def __init__(self):
             Pass
+try:
+    import networkx as nx
+    import matplotlib.pyplot as plt
+    from IPython.display import clear_output
+except:
+    pass
 
 def dephase(state):
     '''
-    Removes the global phase from a SymPy statevector by dividing by the phase of the first component
+    Removes the global phase from a SymPy statevector by dividing by the phase of the first component (Requires SymPy)
 
     :param state: The SymPy statevector to be dephased
     :type state: Expr
