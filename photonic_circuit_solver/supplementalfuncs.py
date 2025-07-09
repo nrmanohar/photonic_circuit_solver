@@ -1,4 +1,4 @@
-'Adding test and utility functions built by Tarek Razzaz'
+'Adding test and utility functions built by Tarek Razzaz. Almost all functions require additional optional packages beyond just NumPy'
 
 try:
     from sympy import I, pi, sqrt, sin, cos, exp, sign, simplify, latex, Expr, Function, Add, Mul
@@ -41,7 +41,7 @@ def dephase(state):
 
 def apply(state, operation = None, dp = False):
     '''
-    Simplifies an expression describing a SymPy statevector
+    Simplifies an expression describing a SymPy statevector (Requires SymPy)
 
     :param state: The SymPy statevector to be simplified
     :type state: Expr
@@ -70,7 +70,7 @@ def apply(state, operation = None, dp = False):
 
 def tensor(state1, state2):
     '''
-    Computes the tensor product of two SymPy statevectors (not fully tested)
+    Computes the tensor product of two SymPy statevectors (not fully tested) (requires SymPy)
 
     :param state1: The first SymPy statevector in the tensor product
     :type state1: Expr
@@ -121,7 +121,7 @@ def tensor(state1, state2):
 
 class Rx(Function):
     '''
-    A custom quantum gate describing a qubit rotation about the x axis
+    A custom quantum gate describing a qubit rotation about the x axis (Requires SymPy)
 
     :param arg1: The index of the qubit to apply the rotation to
     :type arg1: int
@@ -138,7 +138,7 @@ class Rx(Function):
 
 class Ry(Function):
     '''
-    A custom quantum gate describing a qubit rotation about the y axis
+    A custom quantum gate describing a qubit rotation about the y axis (Requires SymPy)
 
     :param arg1: The index of the qubit to apply the rotation to
     :type arg1: int
@@ -155,7 +155,7 @@ class Ry(Function):
 
 class Rz(Function):
     '''
-    A custom quantum gate describing a qubit rotation about the z axis
+    A custom quantum gate describing a qubit rotation about the z axis (Requires SymPy)
 
     :param arg1: The index of the qubit to apply the rotation to
     :type arg1: int
@@ -171,7 +171,7 @@ class Rz(Function):
 
 class Graph:
     """
-    This is a class that encodes graphs, and contains a few convenient functions
+    This is a class that encodes graphs, and contains a few convenient functions (most useful methods require optional packages)
 
     :param edges: A list of edges describing the graph
     :type edges: list
@@ -198,6 +198,13 @@ class Graph:
 
 
     def draw(self, figsize=(4, 4)) -> None:
+        '''
+        Method to draw the graph imported (requires NetworkX and Matplotlib)
+
+        :param figsize: Size of the figure outputted by Matplotlib (defaults to (4,4))
+        :type figsize: tuple or list
+        
+        '''
         G = nx.Graph()
         G.add_edges_from(self.edges)
         plt.figure(figsize=figsize)
@@ -208,7 +215,7 @@ class Graph:
 
     def state(self, progress: bool = False):
         '''
-        Uses SymPy to calculate the statevector associated with the graph
+        Uses SymPy to calculate the statevector associated with the graph (requires SymPy)
 
         :param progress: A boolean option to continuously print out the progress of calculating the state (useful for large graphs), defaults to False
         :type progress: bool

@@ -7,7 +7,7 @@ Installation
 ------------
 To install photonic_circuit_solver, you will need an environment with the following packages:
 
-* Python 3.8 or superior
+* Python 3.11 or superior
 * NumPy
 * Qiskit (Optional)
 * Matplotlib (optional)

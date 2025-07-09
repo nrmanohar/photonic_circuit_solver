@@ -15,10 +15,6 @@ dependencies:
 
     # Pip-only installs
   - pip:
-    - qiskit
-    - numpy
-    - sympy
-    - networkx
-    - matplotlib
+  
     - -e ../
 
