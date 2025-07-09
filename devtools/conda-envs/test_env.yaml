@@ -9,6 +9,7 @@ dependencies:
 
    # Package dependencies
  - numpy
+ - matplotlib
 
    # Testing
  - pytest
@@ -19,7 +20,5 @@ dependencies:
  - pip:
    - qiskit
    - sympy
-   - matplotlib
    - ipython
-   - pylatexenc
    - networkx
