@@ -89,268 +89,269 @@
     <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">clear_output</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Function</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">Pass</span>
 
 <div class="viewcode-block" id="dephase">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.dephase">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">dephase</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Expr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Removes the global phase from a SymPy statevector by dividing by the phase of the first component</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dephase</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Removes the global phase from a SymPy statevector by dividing by the phase of the first component</span>
 
-<span class="sd">        :param state: The SymPy statevector to be dephased</span>
-<span class="sd">        :type state: Expr</span>
+<span class="sd">    :param state: The SymPy statevector to be dephased</span>
+<span class="sd">    :type state: Expr</span>
 
-<span class="sd">        :return: state without the global phase</span>
-<span class="sd">        :rtype: Expr</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">qubit_to_matrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-            <span class="n">glob_phase</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">elem</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">glob_phase</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
-                    <span class="k">break</span>
+<span class="sd">    :return: state without the global phase</span>
+<span class="sd">    :rtype: Expr</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">qubit_to_matrix</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">glob_phase</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">elem</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">glob_phase</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                <span class="k">break</span>
 
-            <span class="k">return</span> <span class="n">state</span> <span class="o">/</span> <span class="n">glob_phase</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">state</span></div>
+        <span class="k">return</span> <span class="n">state</span> <span class="o">/</span> <span class="n">glob_phase</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">state</span></div>
 
 
 
 <div class="viewcode-block" id="apply">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.apply">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Expr</span><span class="p">,</span> <span class="n">operation</span><span class="p">:</span> <span class="n">Expr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dp</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Simplifies an expression describing a SymPy statevector</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dp</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Simplifies an expression describing a SymPy statevector</span>
 
-<span class="sd">        :param state: The SymPy statevector to be simplified</span>
-<span class="sd">        :type state: Expr</span>
+<span class="sd">    :param state: The SymPy statevector to be simplified</span>
+<span class="sd">    :type state: Expr</span>
 
-<span class="sd">        :param operation: An operation (usually a quantum gate) to apply to the state, defaults to None</span>
-<span class="sd">        :type operation: Expr</span>
+<span class="sd">    :param operation: An operation (usually a quantum gate) to apply to the state, defaults to None</span>
+<span class="sd">    :type operation: Expr</span>
 
-<span class="sd">        :param dp: A boolean determining if the statevector should be dephased, defaults to False</span>
-<span class="sd">        :type dp: bool</span>
+<span class="sd">    :param dp: A boolean determining if the statevector should be dephased, defaults to False</span>
+<span class="sd">    :type dp: bool</span>
 
-<span class="sd">        :return: The simplified version of the SymPy statevector</span>
-<span class="sd">        :rtype: Expr</span>
+<span class="sd">    :return: The simplified version of the SymPy statevector</span>
+<span class="sd">    :rtype: Expr</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">operation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">operation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></div>
 
 
 
 <div class="viewcode-block" id="tensor">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.tensor">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tensor</span><span class="p">(</span><span class="n">state1</span><span class="p">:</span> <span class="n">Expr</span><span class="p">,</span> <span class="n">state2</span><span class="p">:</span> <span class="n">Expr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Computes the tensor product of two SymPy statevectors (not fully tested)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tensor</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes the tensor product of two SymPy statevectors (not fully tested)</span>
 
-<span class="sd">        :param state1: The first SymPy statevector in the tensor product</span>
-<span class="sd">        :type state1: Expr</span>
+<span class="sd">    :param state1: The first SymPy statevector in the tensor product</span>
+<span class="sd">    :type state1: Expr</span>
 
-<span class="sd">        :param state2: The second SymPy statevector in the tensor product</span>
-<span class="sd">        :type state2: Expr</span>
+<span class="sd">    :param state2: The second SymPy statevector in the tensor product</span>
+<span class="sd">    :type state2: Expr</span>
 
-<span class="sd">        :return: The SymPy statevector representing the tensor product of state1 and state2</span>
-<span class="sd">        :rtype: Expr</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">    :return: The SymPy statevector representing the tensor product of state1 and state2</span>
+<span class="sd">    :rtype: Expr</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
-        <span class="n">term1</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
-        <span class="n">term2</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state1</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Qubit</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Qubit</span><span class="p">):</span>
-                <span class="n">bits</span> <span class="o">=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span> <span class="o">+</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span>
-                <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-                <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">:</span>
-                    <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">bit</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">Qubit</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Add</span><span class="p">):</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
-                    <span class="n">result</span> <span class="o">+=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                <span class="k">return</span> <span class="n">result</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Mul</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Qubit</span><span class="p">):</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-                    <span class="n">result</span> <span class="o">*=</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Add</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Qubit</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Qubit</span><span class="p">):</span>
+            <span class="n">bits</span> <span class="o">=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span> <span class="o">+</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">:</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">bit</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Qubit</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Add</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="k">return</span> <span class="n">result</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">Mul</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Qubit</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">*=</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Mul</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Qubit</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">result</span> <span class="o">*=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Add</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unexpected input&quot;</span><span class="p">)</span></div>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">Mul</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Qubit</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">*=</span> <span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="n">tensor</span><span class="p">(</span><span class="n">term1</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">term2</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unexpected input&quot;</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="Rx">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rx">[docs]</a>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Rx</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        A custom quantum gate describing a qubit rotation about the x axis</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Rx</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A custom quantum gate describing a qubit rotation about the x axis</span>
 
-<span class="sd">        :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">        :type arg1: int</span>
+<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
+<span class="sd">    :type arg1: int</span>
 
-<span class="sd">        :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">        :type arg2: float</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
+<span class="sd">    :type arg2: float</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="Rx.doit">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rx.doit">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">X</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">X</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{x, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{x, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
 
 
 
 <div class="viewcode-block" id="Ry">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Ry">[docs]</a>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Ry</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        A custom quantum gate describing a qubit rotation about the y axis</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Ry</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A custom quantum gate describing a qubit rotation about the y axis</span>
 
-<span class="sd">        :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">        :type arg1: int</span>
+<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
+<span class="sd">    :type arg1: int</span>
 
-<span class="sd">        :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">        :type arg2: float</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
+<span class="sd">    :type arg2: float</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="Ry.doit">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Ry.doit">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{y, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{y, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
 
 
 
 <div class="viewcode-block" id="Rz">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rz">[docs]</a>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Rz</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        A custom quantum gate describing a qubit rotation about the z axis</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Rz</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A custom quantum gate describing a qubit rotation about the z axis</span>
 
-<span class="sd">        :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">        :type arg1: int</span>
+<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
+<span class="sd">    :type arg1: int</span>
 
-<span class="sd">        :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">        :type arg2: float</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
+<span class="sd">    :type arg2: float</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="Rz.doit">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rz.doit">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{z, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{z, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
 
-    
+
 <div class="viewcode-block" id="Graph">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Graph">[docs]</a>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Graph</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This is a class that encodes graphs, and contains a few convenient functions</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Graph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a class that encodes graphs, and contains a few convenient functions</span>
 
-<span class="sd">        :param edges: A list of edges describing the graph</span>
-<span class="sd">        :type edges: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param edges: A list of edges describing the graph</span>
+<span class="sd">    :type edges: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">n_qubits</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_qubits</span><span class="p">:</span>
-                    <span class="n">n_qubits</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_qubits</span><span class="p">:</span>
-                    <span class="n">n_qubits</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">n_qubits</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_qubits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_qubits</span><span class="p">:</span>
+                <span class="n">n_qubits</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_qubits</span><span class="p">:</span>
+                <span class="n">n_qubits</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">n_qubits</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="n">qubits</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_qubits</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">qubits</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unexpected qubit: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">qubits</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unexpected qubit: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">qubits</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_qubits</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">qubits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unexpected qubit: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">qubits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unexpected qubit: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_qubits</span> <span class="o">=</span> <span class="n">n_qubits</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_qubits</span> <span class="o">=</span> <span class="n">n_qubits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span>
 
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-            <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
-            <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
-                    <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+                <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="Graph.state">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Graph.state">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span><span class="p">:</span>
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            Uses SymPy to calculate the statevector associated with the graph</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Uses SymPy to calculate the statevector associated with the graph</span>
 
-<span class="sd">            :param progress: A boolean option to continuously print out the progress of calculating the state (useful for large graphs), defaults to False</span>
-<span class="sd">            :type progress: bool</span>
+<span class="sd">        :param progress: A boolean option to continuously print out the progress of calculating the state (useful for large graphs), defaults to False</span>
+<span class="sd">        :type progress: bool</span>
 
-<span class="sd">            :return: A SymPy expression representing the statevector</span>
-<span class="sd">            :rtype: Expr</span>
-<span class="sd">            &#39;&#39;&#39;</span>
-            <span class="n">state</span> <span class="o">=</span> <span class="n">Qubit</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_qubits</span><span class="p">)</span>
+<span class="sd">        :return: A SymPy expression representing the statevector</span>
+<span class="sd">        :rtype: Expr</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">Qubit</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">n_qubits</span><span class="p">)</span>
 
-            <span class="n">photons</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">photons</span><span class="p">:</span>
-                    <span class="n">photons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">photons</span><span class="p">:</span>
-                    <span class="n">photons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">photons</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">photons</span><span class="p">:</span>
+                <span class="n">photons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">photons</span><span class="p">:</span>
+                <span class="n">photons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">photons</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-                    <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying Hadamards: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">photons</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
-                <span class="n">photon</span> <span class="o">=</span> <span class="n">photons</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">H</span><span class="p">(</span><span class="n">photon</span><span class="p">))</span>
-
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)):</span>
-                <span class="n">edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-                    <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying CZs: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">CPHASE</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">photons</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-                <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+                <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying Hadamards: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">photons</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+            <span class="n">photon</span> <span class="o">=</span> <span class="n">photons</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">H</span><span class="p">(</span><span class="n">photon</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)):</span>
+            <span class="n">edge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+                <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying CZs: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">CPHASE</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+            <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </div>
 
-
-<span class="k">except</span><span class="p">:</span>
-    <span class="k">pass</span>
 </pre></div>
 
            </div>
