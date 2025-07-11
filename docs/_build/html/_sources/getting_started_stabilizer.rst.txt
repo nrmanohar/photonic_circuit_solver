@@ -88,6 +88,24 @@ In general, :math:`\rho = \sum_{i}p_i|\psi_i\rangle\langle\psi_i |` where :math:
 
 One can easily see that :math:`\text{Tr}(\rho) = 1`, and if we're talking about a pure state then :math:`\text{Tr}(\rho^2) = 1` as well. If we're talking about a mixed state, then :math:`\text{Tr}(\rho^2) < 1`
 
+Another way to characterize how 'mixed' a state is is to use the Von Neumann entropy. The Von Neumann entropy of a state is :math:`S = -\text{Tr}(\rho\ln(\rho))`, or equivalently :math:`S = -\sum_ip_i\ln(p_i)` if in its most simplified form :math:`\rho = \sum_{i}p_i|\psi_i\rangle\langle\psi_i |`
+
+The Von Neumann entropy is 0 if and only if a state is pure.
+
+The partial trace of a density matrix is equivalent to removing a set of qubits. One can think of it as someone measuring all those qubits, but throwing out the measurement outcome.
+
+Suppose we take our state and divide them into two sections, A and B. The entanglement entropy between the two sections is equivalent to the Von Neumann entropy of one of the sections if one traces out the other (it turns out they are equivalent.)
+
+For an example, suppose we had a pure bell state :math:`|\phi\rangle = \frac{1}{\sqrt{2}}(|00\rangle+|11\rangle)` and we want to measure the entanglement entropy between the two qubits.
+
+If someone measures the first qubit, and doesnt tell us the outcome, we're left with a mixed state that is 0 or 1 with equal probability, which we can represent as :math:`\rho = \frac{1}{2}(|0\rangle\langle 0|+|1\rangle\langle 1|)`
+
+If one computes the Von Neumann of that mixed state, we get :math:`\ln(2)`
+
+Suppose we instead had some weighted entangled state :math:`|\phi\rangle = \sqrt{\frac{99}{100}}|00\rangle+\frac{1}{\sqrt{100}}|11\rangle`. Following the same procedure as above, we get :math:`S = -\left(\frac{1}{100}\ln(\frac{1}{100})+\frac{99}{100}\ln(\frac{99}{100}))\approx 0.056`
+
+From this we see that the second state is much less entangled than the first.
+
 It turns out that the density matrix of a stabilizer state is actually easy to find. Suppose a stabilizer state is stabilized by generators :math:`\langle g_0,\ldots,g_n\rangle`.
 
 Then the density matrix of the stabilizer state is :math:`\prod_{i=1}^n\frac{I+g_i}{2}`. Since the stabilizers commute, the order doesn't matter.

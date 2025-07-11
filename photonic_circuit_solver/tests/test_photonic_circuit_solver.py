@@ -113,8 +113,8 @@ def test_qiskit_methods():
 
 
 def test_compare_qiskit():
-    cap = 20
-    depth = 20
+    cap = 100
+    depth = 150
     for k in range(cap):
         print(k)
         state = Stabilizer(9)
