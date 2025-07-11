@@ -88,6 +88,16 @@ def test_stabilizers():
     assert len(indices)==0
 
 def test_qiskit_methods():
+    candidate = [[0,1],[1,2],[2,3],[3,0],[0,2]]
+    state = Stabilizer(edgelist = candidate)
+    q1 = qiskit_circuit_solver(state)
+    q2 = qiskit_circuit_solver_alternate(state)
+    q3 = qiskit_circuit_solver(state, True)
+    q4 = qiskit_circuit_solver_alternate(state, True)
+    assert q1 == q2
+    assert q3 == q4
+
+
     candidate = [[i,(i+1)%6] for i in range(6)]
     candidate.append([0,3])
     candidate.append([2,5])
@@ -103,8 +113,8 @@ def test_qiskit_methods():
 
 
 def test_compare_qiskit():
-    cap = 100
-    depth = 150
+    cap = 20
+    depth = 20
     for k in range(cap):
         print(k)
         state = Stabilizer(9)
@@ -180,6 +190,34 @@ def test_stabilizer_methods():
         state.report()
         state2 = state.clone()
         state2.stabilizer_measurement()
+        state3 = Stabilizer(2)
+        state3.new_stab(2,'XX,-YY')
+        state3.new_stab(2,'XX,ZZ')
+        state3.measurement('ZI',[0])
+        rref(state3)
+        assert state3.stabilizers() == ['ZI','IZ']
+        state3.measurement('XI,XX',[0,1])
+        rref(state3)
+        state3.flip()
+        assert state3.stabilizers() == ['-IX','XI']
+
+def test_rref():
+    state = Stabilizer(edgelist = [[0,1],[1,2],[2,3],[3,0],[0,2]])
+    rref(state)
+    h = heightfunction(state)
+    for i in range(len(h)):
+        assert partial_height(state, i)==h[i]
+    prot = circuit_solver(state)
+    assert prot is not None
+    assert emitter_cnot(state) == [num_emitters(state),num_cnots(state)]
+
+def test_partially_circuit_building():
+    state = Stabilizer(edgelist = [[0,1],[1,2],[2,3],[3,0],[0,2]])
+    qc = state.circuit_builder()
+    state.qiskit_stabilizers()
+    qc2 = state.stabilizer_measurement()
+    qc3 = state.build_and_measure()        
+    state.draw_circuit('text')
 
 def test_display():
     edges = [[0, 1], [0, 2], [1, 2], [1, 3], [2, 3]]

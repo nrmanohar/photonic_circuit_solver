@@ -375,7 +375,7 @@ class Stabilizer:
             if outcomes[i]==1:
                 stabilizers[i] = '-'+stabilizers[i]
             stabs[index]=stabilizers[i]
-            self.new_stab(self.size,stabs,True)
+            self.new_stab(self.size,stabs)
 
     def report(self):
         """
@@ -672,6 +672,10 @@ class Stabilizer:
         :rtype: QuantumCircuit
 
         """
+        try:
+            from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
+        except:
+            ImportError('Qiskit not imported')
         circ = self.circuit_builder()
         qs = QuantumCircuit(2*self.size)
         bits = []
