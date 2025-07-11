@@ -5,14 +5,13 @@ This page details how to get started with photonic_circuit_solver. This page cov
 
 Installation
 ------------
-To install photonic_circuit_solver, you will need an environment with the following packages:
+To install photonic_circuit_solver and use the Stabilizer class, you will need photonic_circuit_solver installed in an environment with the following packages:
 
-* Python 3.8 or superior
+* Python 3.11 or superior
 * NumPy
-* Qiskit (Optional)
+* Qiskit (optional)
 * Matplotlib (optional)
 * Pylatexenc (optional)
-* Sympy (optional)
 
 Note, all computational aspects are done in NumPy. You only need Qiskit if you want to use any of the methods that output Qiskit circuits. Similar for the SymPy methods. You only need Matplotlib and Pylatexenc if you want to plot the circuit outside of the shell. If you just want do do computation, or are fine with the circuits being drawn in the shell by qiskit, these are not required.
 
@@ -76,6 +75,28 @@ If we generate a group from them we get :math:`G = \langle g_1,g_2\ldots g_m\ran
 Here's the key, let's generate a group :math:`G' = \langle g_1\ldots g_{i-1},g_{i+1}\ldots g_n\rangle` where we removed one arbitrary generator. No matter which generater we removed, :math:`G'\subset G`. In other words, removing one of the generators reduces the size of your group. If this is true, we say our generators are 'independant.'
 
 For large states, it's hard to determine by inspection. However, this package comes pre-built with verification for independence of generators.
+
+Density matrices
+`````````````````
+While we desribe pure states with a statevector :math:`|\psi\rangle`, we can also represent them by so called density matrices, traditionally denoted :math:`\rho`. For pure states, :math:`\rho = |\psi\rangle\langle\psi|`
+
+Density matrices allow us to talk about both pure states and mixed states. Suppose we want to run a circuit on a machine that randomly spits out the :math:`|0\rangle` or the :math:`|1\rangle` state with equal probability (note, this is not the :math:`|+\rangle` state, this is an inherently probabilistic machine.)
+
+We can write :math:`\rho = \frac{1}{2}|0\rangle\langle 0| +\frac{1}{2}|1\rangle\langle 0|`
+
+In general, :math:`\rho = \sum_{i}p_i|\psi_i\rangle\langle\psi_i |` where :math:`|\psi_i\rangle` are pure states and :math:`\sum_{i}p_i = 1`
+
+One can easily see that :math:`\text{Tr}(\rho) = 1`, and if we're talking about a pure state then :math:`\text{Tr}(\rho^2) = 1` as well. If we're talking about a mixed state, then :math:`\text{Tr}(\rho^2) < 1`
+
+It turns out that the density matrix of a stabilizer state is actually easy to find. Suppose a stabilizer state is stabilized by generators :math:`\langle g_0,\ldots,g_n\rangle`.
+
+Then the density matrix of the stabilizer state is :math:`\prod_{i=1}^n\frac{I+g_i}{2}`. Since the stabilizers commute, the order doesn't matter.
+
+One should expect that the density matrix should be independant of the choice of generators, and in fact this is true. Suppose we index every element of the stabilizer group :math:`s_i`, where :math:`i` is an integer from 1 to :math:`N = 2^n`
+
+Then we find that :math:`\rho = \frac{1}{N}\sum_{i=1}^Ns_i`, and any choice of generators can be shown to be equivalent to this.
+
+The reason one may care about density matrices is that they are the more encompassing description of quantum states, and are important to the notion of entropy in the RREF section.
 
 Clifford Operations
 ````````````````````

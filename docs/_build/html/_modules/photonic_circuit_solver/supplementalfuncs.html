@@ -79,7 +79,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for photonic_circuit_solver.supplementalfuncs</h1><div class="highlight"><pre>
-<span></span><span class="s1">&#39;Adding test and utility functions built by Tarek Razzaz&#39;</span>
+<span></span><span class="s1">&#39;Adding test and utility functions built by Tarek Razzaz. Almost all functions require additional optional packages beyond just NumPy&#39;</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">I</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sign</span><span class="p">,</span> <span class="n">simplify</span><span class="p">,</span> <span class="n">latex</span><span class="p">,</span> <span class="n">Expr</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Add</span><span class="p">,</span> <span class="n">Mul</span>
@@ -87,9 +87,7 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">sympy.physics.quantum.qubit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qubit</span><span class="p">,</span> <span class="n">QubitBra</span><span class="p">,</span> <span class="n">qubit_to_matrix</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sympy.physics.quantum.gate</span><span class="w"> </span><span class="kn">import</span> <span class="n">IdentityGate</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">CNOT</span><span class="p">,</span> <span class="n">CPHASE</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Function</span><span class="p">:</span>
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="n">Pass</span>
+    <span class="k">pass</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -144,14 +142,30 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">operation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="n">pre_simplified</span> <span class="o">=</span> <span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">pre_simplified</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pre_simplified</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="n">pre_simplified</span> <span class="o">=</span> <span class="n">qapply</span><span class="p">((</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">pre_simplified</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pre_simplified</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">dp</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="n">pre_simplified</span> <span class="o">=</span> <span class="n">dephase</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">pre_simplified</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pre_simplified</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">()))</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></div>
+            <span class="n">pre_simplified</span> <span class="o">=</span> <span class="n">qapply</span><span class="p">((</span><span class="n">operation</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">doit</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">pre_simplified</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pre_simplified</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span></div>
 
 
 
@@ -159,7 +173,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.tensor">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">tensor</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Computes the tensor product of two SymPy statevectors (not fully tested)</span>
+<span class="sd">    Computes the tensor product of two SymPy statevectors (not fully tested) (requires SymPy)</span>
 
 <span class="sd">    :param state1: The first SymPy statevector in the tensor product</span>
 <span class="sd">    :type state1: Expr</span>
@@ -209,79 +223,56 @@
 
 
 
+<div class="viewcode-block" id="Rz">
+<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rz">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">Rz</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Apply an RZ gate via SymPy (requires SymPy)</span>
+
+<span class="sd">    :param theta: Rotation angle</span>
+<span class="sd">    :type theta: float</span>
+
+<span class="sd">    :param target: Qubit to apply the RZ gate to</span>
+<span class="sd">    :type target: int</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Rx">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rx">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Rx</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Rx</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    A custom quantum gate describing a qubit rotation about the x axis</span>
+<span class="sd">    Apply an RZ gate via SymPy (requires SymPy)</span>
 
-<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">    :type arg1: int</span>
+<span class="sd">    :param theta: Rotation angle</span>
+<span class="sd">    :type theta: float</span>
 
-<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">    :type arg2: float</span>
+<span class="sd">    :param target: Qubit to apply the RZ gate to</span>
+<span class="sd">    :type target: int</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="Rx.doit">
-<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rx.doit">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">X</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{x, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
-
+    <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">X</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Ry">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Ry">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Ry</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Ry</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    A custom quantum gate describing a qubit rotation about the y axis</span>
+<span class="sd">    Apply an RZ gate via SymPy (requires SymPy)</span>
 
-<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">    :type arg1: int</span>
+<span class="sd">    :param theta: Rotation angle</span>
+<span class="sd">    :type theta: float</span>
 
-<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">    :type arg2: float</span>
+<span class="sd">    :param target: Qubit to apply the RZ gate to</span>
+<span class="sd">    :type target: int</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="Ry.doit">
-<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Ry.doit">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{y, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
-
-
-
-<div class="viewcode-block" id="Rz">
-<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rz">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Rz</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    A custom quantum gate describing a qubit rotation about the z axis</span>
-
-<span class="sd">    :param arg1: The index of the qubit to apply the rotation to</span>
-<span class="sd">    :type arg1: int</span>
-
-<span class="sd">    :param arg2: The angle by which to rotate the qubit</span>
-<span class="sd">    :type arg2: float</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="Rz.doit">
-<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Rz.doit">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Z</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;R_{z, </span><span class="si">%s</span><span class="s2">}\left(</span><span class="si">%s</span><span class="s2">\right)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">latex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+    <span class="k">return</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">IdentityGate</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">-</span> <span class="n">I</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Graph">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Graph">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Graph</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This is a class that encodes graphs, and contains a few convenient functions</span>
+<span class="sd">    This is a class that encodes graphs, and contains a few convenient functions (most useful methods require optional packages)</span>
 
 <span class="sd">    :param edges: A list of edges describing the graph</span>
 <span class="sd">    :type edges: list</span>
@@ -307,20 +298,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span>
 
 
+<div class="viewcode-block" id="Graph.draw">
+<a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Graph.draw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Method to draw the graph imported (requires NetworkX and Matplotlib)</span>
+
+<span class="sd">        :param figsize: Size of the figure outputted by Matplotlib (defaults to (4,4))</span>
+<span class="sd">        :type figsize: tuple or list</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
         <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
         <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
                 <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
 
 
 <div class="viewcode-block" id="Graph.state">
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Graph.state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Uses SymPy to calculate the statevector associated with the graph</span>
+<span class="sd">        Uses SymPy to calculate the statevector associated with the graph (requires SymPy)</span>
 
 <span class="sd">        :param progress: A boolean option to continuously print out the progress of calculating the state (useful for large graphs), defaults to False</span>
 <span class="sd">        :type progress: bool</span>
@@ -352,7 +353,9 @@
             <span class="n">state</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">CPHASE</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
         <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
-            <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+            <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
 </div>
 
 </pre></div>

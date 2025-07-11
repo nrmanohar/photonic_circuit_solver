@@ -6,9 +6,7 @@ try:
     from sympy.physics.quantum.qubit import Qubit, QubitBra, qubit_to_matrix
     from sympy.physics.quantum.gate import IdentityGate, X, Y, Z, H, S, T, CNOT, CPHASE
 except:
-    class Function:
-        def __init__(self):
-            Pass
+    pass
 try:
     import networkx as nx
     import matplotlib.pyplot as plt
@@ -41,7 +39,7 @@ def dephase(state):
 
 def apply(state, operation = None, dp = False):
     '''
-    Simplifies an expression describing a SymPy statevector (Requires SymPy)
+    Simplifies an expression describing a SymPy statevector
 
     :param state: The SymPy statevector to be simplified
     :type state: Expr
@@ -58,14 +56,30 @@ def apply(state, operation = None, dp = False):
     '''
     if operation is None:
         if dp:
-            return simplify(dephase(qapply((state).doit()))).expand()
+            pre_simplified = dephase(qapply((state).doit()))
+            try:
+                return simplify(pre_simplified).expand()
+            except:
+                return pre_simplified.evalf()
         else:
-            return simplify(qapply((state).doit())).expand()
+            pre_simplified = qapply((state).doit())
+            try:
+                return simplify(pre_simplified).expand()
+            except:
+                return pre_simplified.evalf()
     else:
         if dp:
-            return simplify(dephase(qapply((operation * state).doit()))).expand()
+            pre_simplified = dephase(qapply((operation * state).doit()))
+            try:
+                return simplify(pre_simplified).expand()
+            except:
+                return pre_simplified.evalf()
         else:
-            return simplify(qapply((operation * state).doit())).expand()
+            pre_simplified = qapply((operation * state).doit())
+            try:
+                return simplify(pre_simplified).expand()
+            except:
+                return pre_simplified.evalf()
 
 
 def tensor(state1, state2):
@@ -119,55 +133,41 @@ def tensor(state1, state2):
         raise TypeError("Unexpected input")
 
 
-class Rx(Function):
+def Rz(target: int, theta: float):
     '''
-    A custom quantum gate describing a qubit rotation about the x axis (Requires SymPy)
+    Apply an RZ gate via SymPy (requires SymPy)
 
-    :param arg1: The index of the qubit to apply the rotation to
-    :type arg1: int
+    :param theta: Rotation angle
+    :type theta: float
 
-    :param arg2: The angle by which to rotate the qubit
-    :type arg2: float
+    :param target: Qubit to apply the RZ gate to
+    :type target: int
     '''
-    def doit(self, **kwargs):
-        return cos(self.args[1]/2)*IdentityGate(self.args[0]) - I*sin(self.args[1]/2)*X(self.args[0])
+    return cos(theta/2)*IdentityGate(target) - I*sin(theta/2)*Z(target)
 
-    def _latex(self, printer):
-        return r"R_{x, %s}\left(%s\right)" % (latex(self.args[0]), latex(self.args[1]))
-
-
-class Ry(Function):
+def Rx(target: int, theta: float):
     '''
-    A custom quantum gate describing a qubit rotation about the y axis (Requires SymPy)
+    Apply an RZ gate via SymPy (requires SymPy)
 
-    :param arg1: The index of the qubit to apply the rotation to
-    :type arg1: int
+    :param theta: Rotation angle
+    :type theta: float
 
-    :param arg2: The angle by which to rotate the qubit
-    :type arg2: float
+    :param target: Qubit to apply the RZ gate to
+    :type target: int
     '''
-    def doit(self, **kwargs):
-        return cos(self.args[1]/2)*IdentityGate(self.args[0]) - I*sin(self.args[1]/2)*Y(self.args[0])
+    return cos(theta/2)*IdentityGate(target) - I*sin(theta/2)*X(target)
 
-    def _latex(self, printer):
-        return r"R_{y, %s}\left(%s\right)" % (latex(self.args[0]), latex(self.args[1]))
-
-
-class Rz(Function):
+def Ry(target: int, theta: float):
     '''
-    A custom quantum gate describing a qubit rotation about the z axis (Requires SymPy)
+    Apply an RZ gate via SymPy (requires SymPy)
 
-    :param arg1: The index of the qubit to apply the rotation to
-    :type arg1: int
+    :param theta: Rotation angle
+    :type theta: float
 
-    :param arg2: The angle by which to rotate the qubit
-    :type arg2: float
+    :param target: Qubit to apply the RZ gate to
+    :type target: int
     '''
-    def doit(self, **kwargs):
-        return cos(self.args[1]/2)*IdentityGate(self.args[0]) - I*sin(self.args[1]/2)*Z(self.args[0])
-
-    def _latex(self, printer):
-        return r"R_{z, %s}\left(%s\right)" % (latex(self.args[0]), latex(self.args[1]))
+    return cos(theta/2)*IdentityGate(target) - I*sin(theta/2)*Y(target)
 
 class Graph:
     """
@@ -248,3 +248,5 @@ class Graph:
 
         if progress:
             clear_output(wait=True)
+
+        return state

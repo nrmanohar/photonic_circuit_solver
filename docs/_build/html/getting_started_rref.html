@@ -52,6 +52,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started_stabilizer.html">Getting Started (Stabilizer)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started (RREF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rref-gauge-choice">RREF Gauge Choice</a></li>
 </ul>
 </li>
@@ -87,9 +88,52 @@
   <section id="getting-started-rref">
 <h1>Getting Started (RREF)<a class="headerlink" href="#getting-started-rref" title="Link to this heading"></a></h1>
 <p>This page details how to get started with photonic_circuit_solver. This page covers the RREF function and the photonic circuit solving algorithm.</p>
-<p>This is entire codebase relies on the Stabilizer class, so if you haven’t already read that page first (package installation is also covered there)</p>
+<p>This is entire codebase relies on the Stabilizer class, so if you haven’t already read that page first.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>To install photonic_circuit_solver and use the rref functions and supplemental functions, you will need photonic_circuit_solver installed in an environment with the following packages:</p>
+<ul class="simple">
+<li><p>Python 3.11 or superior</p></li>
+<li><p>NumPy</p></li>
+<li><p>Qiskit (optional)</p></li>
+<li><p>Matplotlib (optional)</p></li>
+<li><p>SymPy (optional)</p></li>
+</ul>
+<p>As in Stabilizer, the core computation is all done using NumPy as native python data types, all optional packages are for visual and style utility. Qiskit is needed for any functions that output qiskit circuits, Matplotlib is needed for any plotting functions, and SymPy is needed for functions in the supplemental functions.</p>
+</section>
 <section id="rref-gauge-choice">
 <h2>RREF Gauge Choice<a class="headerlink" href="#rref-gauge-choice" title="Link to this heading"></a></h2>
+<p>In the Stabilizer section, we noted that the choice of generators for representing a stabilizer state is not unique. However, given a choice of generators, there is a way to bring it into a form that is similar to the upper triangular form of the RREF linear operation on matrices. This protocol is called the RREF algorithm, and further details can be found at <a class="reference external" href="https://doi.org/10.1088/1367-2630/7/1/170">https://doi.org/10.1088/1367-2630/7/1/170</a>.</p>
+<p>Note that even fixing a set of generators, the RREF gauge is still not unique. However, it does have some useful properties for our purposes.</p>
+<p>First, fix some order of your generators. This is done inherently by the <code class="docutils literal notranslate"><span class="pre">Stabilizer</span></code> class since the tableau is a matrix with ordered rows.</p>
+<p>To bring a set of stabilizers into RREF gauge, we note that we have N columns and K rows. For the purposes of this package, since the Stabilizer class enforces pure states, K = N, although this is not necessarily true for broader uses of the algorithm.</p>
+<p>We also have an active region, denoted by the column NL and the row KU.</p>
+<p>We start by setting NL = 1 and inspect the first column, and look at all the Paulis in the first column, i.e. inspecting the first entry in every generator. There should be one of two cases, there are only identities and one specific Pauli, or identities and at least two Paulis.</p>
+<p>If we’re in case 1, reorder the generators such that a generator with a non-identity Pauli are in row 1, and set KU = 1. Then, for all rows k such that k&gt;KU, if the first entry of that generator is a non-identity Pauli, multiply that generator by the first generator and replace it.</p>
+<p>In the code, this is done via the <code class="docutils literal notranslate"><span class="pre">row_add</span></code> method of the Stabilizer class.</p>
+<p>If we’re in case 2, reorder the generators such that a generator with the non-identity Paulis are in rows 1 and 2, and ensure that those Paulis differ. Set KU = 2, and for all k&gt;KU, inspect the corresponding generator. If the first Pauli is an identity, do nothing. If it matches the Pauli in row 1, multiply them together and replace the kth generator with that, and similar with row 2. If it is the third pauli, multiply by both row1 and row2 and replace the kth generator with the new generator.</p>
+<p>Then set NL=1, and follow the same steps (only inspecting Paulis for rows greater than the previous KU). If the column has only identities (which wasn’t possible for column 1 but is possible afterwards), don’t alter KU and just set NL+=1</p>
+<p>Let’s see the package implement this.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photonic_circuit_solver</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">Stabilizer</span><span class="p">(</span><span class="n">edgelist</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">state</span><span class="o">.</span><span class="n">stabilizers</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>returns</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;XZZI&#39;</span><span class="p">,</span> <span class="s1">&#39;ZXZZ&#39;</span><span class="p">,</span> <span class="s1">&#39;ZZXZ&#39;</span><span class="p">,</span> <span class="s1">&#39;IZZX&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now lets implement the RREF procedure. If you do the RREF procedure by hand, you should notice all we need to do is multiply row 2 into row 3, and then the generators will be in RREF gauge.</p>
+<p>And as expected, following the above code with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rref</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">stabilizers</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>returns</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;XZZI&#39;</span><span class="p">,</span> <span class="s1">&#39;ZXZZ&#39;</span><span class="p">,</span> <span class="s1">&#39;IYYI&#39;</span><span class="p">,</span> <span class="s1">&#39;IZZX&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>As expected.</p>
 </section>
 </section>
 

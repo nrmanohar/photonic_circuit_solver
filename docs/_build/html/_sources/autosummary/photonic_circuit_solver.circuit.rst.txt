@@ -15,5 +15,7 @@
       num_emitters
       partial_height
       plot_height
+      qiskit_circuit_solver
+      qiskit_circuit_solver_alternate
       rref
    

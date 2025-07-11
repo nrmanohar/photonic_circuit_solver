@@ -28,6 +28,10 @@ API Documentation
 
 .. autofunction:: circuit_solver
 
+.. autofunction:: qiskit_circuit_solver
+
+.. autofunction:: qiskit_circuit_solver_alternate
+
 .. autofunction:: num_cnots
 
 .. autofunction:: emitter_cnot
@@ -38,12 +42,10 @@ API Documentation
 
 .. autofunction:: dephase
 
-.. autoclass:: Rx
-   :members:
+.. autofunction:: Rz
 
-.. autoclass:: Ry
-   :members:
+.. autofunction:: Rx
 
-.. autoclass:: Rz
-   :members:
+.. autofunction:: Ry
+
 

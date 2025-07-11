@@ -89,18 +89,27 @@
              
   <section id="module-photonic_circuit_solver.supplementalfuncs">
 <span id="photonic-circuit-solver-supplementalfuncs"></span><h1>photonic_circuit_solver.supplementalfuncs<a class="headerlink" href="#module-photonic_circuit_solver.supplementalfuncs" title="Link to this heading"></a></h1>
-<p>Adding test and utility functions built by Tarek Razzaz</p>
+<p>Adding test and utility functions built by Tarek Razzaz. Almost all functions require additional optional packages beyond just NumPy</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(state[, operation, dp])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rx</span></code>(target, theta)</p></td>
+<td><p>Apply an RZ gate via SymPy (requires SymPy)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ry</span></code>(target, theta)</p></td>
+<td><p>Apply an RZ gate via SymPy (requires SymPy)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rz</span></code>(target, theta)</p></td>
+<td><p>Apply an RZ gate via SymPy (requires SymPy)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(state[, operation, dp])</p></td>
 <td><p>Simplifies an expression describing a SymPy statevector</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dephase</span></code>(state)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dephase</span></code>(state)</p></td>
 <td><p>Removes the global phase from a SymPy statevector by dividing by the phase of the first component (Requires SymPy)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tensor</span></code>(state1, state2)</p></td>
-<td><p>Computes the tensor product of two SymPy statevectors (not fully tested)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tensor</span></code>(state1, state2)</p></td>
+<td><p>Computes the tensor product of two SymPy statevectors (not fully tested) (requires SymPy)</p></td>
 </tr>
 </tbody>
 </table>
@@ -108,16 +117,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../api.html#photonic_circuit_solver.Graph" title="photonic_circuit_solver.supplementalfuncs.Graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Graph</span></code></a>(edges)</p></td>
-<td><p>This is a class that encodes graphs, and contains a few convenient functions</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../api.html#photonic_circuit_solver.Rx" title="photonic_circuit_solver.supplementalfuncs.Rx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rx</span></code></a>(*args)</p></td>
-<td><p>A custom quantum gate describing a qubit rotation about the x axis</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#photonic_circuit_solver.Ry" title="photonic_circuit_solver.supplementalfuncs.Ry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ry</span></code></a>(*args)</p></td>
-<td><p>A custom quantum gate describing a qubit rotation about the y axis</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../api.html#photonic_circuit_solver.Rz" title="photonic_circuit_solver.supplementalfuncs.Rz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rz</span></code></a>(*args)</p></td>
-<td><p>A custom quantum gate describing a qubit rotation about the z axis</p></td>
+<td><p>This is a class that encodes graphs, and contains a few convenient functions (most useful methods require optional packages)</p></td>
 </tr>
 </tbody>
 </table>

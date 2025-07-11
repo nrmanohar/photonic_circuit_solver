@@ -8,6 +8,9 @@
 
    .. autosummary::
    
+      Rx
+      Ry
+      Rz
       apply
       dephase
       tensor
@@ -17,7 +20,4 @@
    .. autosummary::
    
       Graph
-      Rx
-      Ry
-      Rz
    

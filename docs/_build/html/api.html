@@ -85,6 +85,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Graph"><code class="docutils literal notranslate"><span class="pre">Graph</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Graph.draw"><code class="docutils literal notranslate"><span class="pre">Graph.draw()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Graph.state"><code class="docutils literal notranslate"><span class="pre">Graph.state()</span></code></a></li>
 </ul>
 </li>
@@ -93,23 +94,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.plot_height"><code class="docutils literal notranslate"><span class="pre">plot_height()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.num_emitters"><code class="docutils literal notranslate"><span class="pre">num_emitters()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.circuit_solver"><code class="docutils literal notranslate"><span class="pre">circuit_solver()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.qiskit_circuit_solver"><code class="docutils literal notranslate"><span class="pre">qiskit_circuit_solver()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.qiskit_circuit_solver_alternate"><code class="docutils literal notranslate"><span class="pre">qiskit_circuit_solver_alternate()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.num_cnots"><code class="docutils literal notranslate"><span class="pre">num_cnots()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.emitter_cnot"><code class="docutils literal notranslate"><span class="pre">emitter_cnot()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.apply"><code class="docutils literal notranslate"><span class="pre">apply()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.tensor"><code class="docutils literal notranslate"><span class="pre">tensor()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.dephase"><code class="docutils literal notranslate"><span class="pre">dephase()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Rx"><code class="docutils literal notranslate"><span class="pre">Rx</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Rx.doit"><code class="docutils literal notranslate"><span class="pre">Rx.doit()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Ry"><code class="docutils literal notranslate"><span class="pre">Ry</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Ry.doit"><code class="docutils literal notranslate"><span class="pre">Ry.doit()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Rz"><code class="docutils literal notranslate"><span class="pre">Rz</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Rz.doit"><code class="docutils literal notranslate"><span class="pre">Rz.doit()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Rz"><code class="docutils literal notranslate"><span class="pre">Rz()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Rx"><code class="docutils literal notranslate"><span class="pre">Rx()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#photonic_circuit_solver.Ry"><code class="docutils literal notranslate"><span class="pre">Ry()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About this package</a></li>
@@ -150,7 +144,7 @@
 <td><p>Contains the functions needed to implement the emission circuit solving procedure</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="autosummary/photonic_circuit_solver.supplementalfuncs.html#module-photonic_circuit_solver.supplementalfuncs" title="photonic_circuit_solver.supplementalfuncs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">photonic_circuit_solver.supplementalfuncs</span></code></a></p></td>
-<td><p>Adding test and utility functions built by Tarek Razzaz</p></td>
+<td><p>Adding test and utility functions built by Tarek Razzaz.</p></td>
 </tr>
 </tbody>
 </table>
@@ -160,7 +154,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Stabilizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stabs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer" title="Link to this definition"></a></dt>
-<dd><p>This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a bell state. If only the n is given, it will initialize n qubits in the 0 state</p>
+<dd><p>This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a two qubit bell state. If only the n is given, it will initialize the n qubit computational zero state</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -448,16 +442,27 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Graph">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Graph" title="Link to this definition"></a></dt>
-<dd><p>This is a class that encodes graphs, and contains a few convenient functions</p>
+<dd><p>This is a class that encodes graphs, and contains a few convenient functions (most useful methods require optional packages)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>edges</strong> (<em>list</em>) – A list of edges describing the graph</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Graph.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(4,</span> <span class="pre">4)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Graph.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Graph.draw" title="Link to this definition"></a></dt>
+<dd><p>Method to draw the graph imported (requires NetworkX and Matplotlib)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>figsize</strong> (<em>tuple</em><em> or </em><em>list</em>) – Size of the figure outputted by Matplotlib (defaults to (4,4))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Graph.state">
 <span class="sig-name descname"><span class="pre">state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Graph.state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Graph.state" title="Link to this definition"></a></dt>
-<dd><p>Uses SymPy to calculate the statevector associated with the graph</p>
+<dd><p>Uses SymPy to calculate the statevector associated with the graph (requires SymPy)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>progress</strong> (<em>bool</em>) – A boolean option to continuously print out the progress of calculating the state (useful for large graphs), defaults to False</p>
@@ -475,7 +480,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.rref">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">rref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#rref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.rref" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">rref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#rref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.rref" title="Link to this definition"></a></dt>
 <dd><p>Given a stabilizer state, implements the RREF gauge procedure (details in doi.org/10.1088/1367-2630/7/1/170)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -486,7 +491,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.heightfunction">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">heightfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#heightfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.heightfunction" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">heightfunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#heightfunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.heightfunction" title="Link to this definition"></a></dt>
 <dd><p>Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -503,7 +508,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.plot_height">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">plot_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#plot_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.plot_height" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">plot_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#plot_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.plot_height" title="Link to this definition"></a></dt>
 <dd><p>Given a stabilizer state, finds the height function (bipartite entanglement entropy) of the state (formula in doi.org/10.1038/s41534-022-00522-6, equation 1) and plots it (need matplotlib installed)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -514,7 +519,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.num_emitters">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_emitters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_emitters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_emitters" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_emitters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_emitters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_emitters" title="Link to this definition"></a></dt>
 <dd><p>Given a graph state with a certain fixed ordering, finds the minimal number of emitters required to emit that state</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -531,7 +536,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.circuit_solver">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">circuit_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#circuit_solver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.circuit_solver" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">circuit_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#circuit_solver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.circuit_solver" title="Link to this definition"></a></dt>
 <dd><p>Given a stabilizer state, finds a circuit to generate it from a minimal set of emitters (details in doi.org/10.1038/s41534-022-00522-6)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -547,8 +552,48 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.qiskit_circuit_solver">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">qiskit_circuit_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">simple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#qiskit_circuit_solver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.qiskit_circuit_solver" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, creates a qiskit circuit to generate it from a minimal set of emitters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p></li>
+<li><p><strong>simple</strong> (<em>bool</em><em> (</em><em>optional</em><em>, </em><em>defaults to False</em><em>)</em>) – Uses one register for both photons and emitters instead of seperate registers. Defaults to false</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Qiskit circuit corresponding to the protocol</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>QuantumCircuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.qiskit_circuit_solver_alternate">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">qiskit_circuit_solver_alternate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">simple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#qiskit_circuit_solver_alternate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.qiskit_circuit_solver_alternate" title="Link to this definition"></a></dt>
+<dd><p>Given a stabilizer state, creates a qiskit circuit to generate it from a minimal set of emitters. Uses circuit_solver to generate the protocol instead of doing it simultaneously.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.Stabilizer"><em>Stabilizer</em></a>) – Stabilizer state from which to calculate the height function</p></li>
+<li><p><strong>simple</strong> (<em>bool</em><em> (</em><em>optional</em><em>, </em><em>defaults to False</em><em>)</em>) – Uses one register for both photons and emitters instead of separate ones</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Qiskit circuit corresponding to the protocol</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>QuantumCircuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.num_cnots">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_cnots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_cnots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_cnots" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">num_cnots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#num_cnots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.num_cnots" title="Link to this definition"></a></dt>
 <dd><p>Given a graph state with a certain fixed ordering, finds the number of emitters-emitter CNOT gates required to emit that state using this implementation of the solving algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -565,7 +610,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.emitter_cnot">
-<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">emitter_cnot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#emitter_cnot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.emitter_cnot" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">emitter_cnot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer" title="photonic_circuit_solver.stabilizer.Stabilizer"><span class="pre">Stabilizer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/circuit.html#emitter_cnot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.emitter_cnot" title="Link to this definition"></a></dt>
 <dd><p>Given a stabilizer state, finds the number of emitters and the number of emitter-emitter CNOT gates needed to implement the circuit</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -604,7 +649,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.tensor">
 <span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.tensor" title="Link to this definition"></a></dt>
-<dd><p>Computes the tensor product of two SymPy statevectors (not fully tested)</p>
+<dd><p>Computes the tensor product of two SymPy statevectors (not fully tested) (requires SymPy)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -638,121 +683,46 @@
 </dl>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="photonic_circuit_solver.Rx">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Rx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rx" title="Link to this definition"></a></dt>
-<dd><p>A custom quantum gate describing a qubit rotation about the x axis</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>arg1</strong> (<em>int</em>) – The index of the qubit to apply the rotation to</p></li>
-<li><p><strong>arg2</strong> (<em>float</em>) – The angle by which to rotate the qubit</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="photonic_circuit_solver.Rx.doit">
-<span class="sig-name descname"><span class="pre">doit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rx.doit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rx.doit" title="Link to this definition"></a></dt>
-<dd><p>Evaluate objects that are not evaluated by default like limits,
-integrals, sums and products. All objects of this kind will be
-evaluated recursively, unless some species were excluded via ‘hints’
-or unless the ‘deep’ hint was set to ‘False’.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">x</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">()</span>
-<span class="go">x**2</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="photonic_circuit_solver.Ry">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Ry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Ry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Ry" title="Link to this definition"></a></dt>
-<dd><p>A custom quantum gate describing a qubit rotation about the y axis</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>arg1</strong> (<em>int</em>) – The index of the qubit to apply the rotation to</p></li>
-<li><p><strong>arg2</strong> (<em>float</em>) – The angle by which to rotate the qubit</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="photonic_circuit_solver.Ry.doit">
-<span class="sig-name descname"><span class="pre">doit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Ry.doit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Ry.doit" title="Link to this definition"></a></dt>
-<dd><p>Evaluate objects that are not evaluated by default like limits,
-integrals, sums and products. All objects of this kind will be
-evaluated recursively, unless some species were excluded via ‘hints’
-or unless the ‘deep’ hint was set to ‘False’.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">x</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">()</span>
-<span class="go">x**2</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
+<dl class="py function">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Rz">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Rz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rz" title="Link to this definition"></a></dt>
-<dd><p>A custom quantum gate describing a qubit rotation about the z axis</p>
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Rz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rz" title="Link to this definition"></a></dt>
+<dd><p>Apply an RZ gate via SymPy (requires SymPy)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>arg1</strong> (<em>int</em>) – The index of the qubit to apply the rotation to</p></li>
-<li><p><strong>arg2</strong> (<em>float</em>) – The angle by which to rotate the qubit</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – Rotation angle</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – Qubit to apply the RZ gate to</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="photonic_circuit_solver.Rz.doit">
-<span class="sig-name descname"><span class="pre">doit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rz.doit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rz.doit" title="Link to this definition"></a></dt>
-<dd><p>Evaluate objects that are not evaluated by default like limits,
-integrals, sums and products. All objects of this kind will be
-evaluated recursively, unless some species were excluded via ‘hints’
-or unless the ‘deep’ hint was set to ‘False’.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integral</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sympy.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">x</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">()</span>
-<span class="go">x**2</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">doit</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">2*Integral(x, x)</span>
-</pre></div>
-</div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Rx">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Rx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Rx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Rx" title="Link to this definition"></a></dt>
+<dd><p>Apply an RZ gate via SymPy (requires SymPy)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<em>float</em>) – Rotation angle</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – Qubit to apply the RZ gate to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Ry">
+<span class="sig-prename descclassname"><span class="pre">photonic_circuit_solver.</span></span><span class="sig-name descname"><span class="pre">Ry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/supplementalfuncs.html#Ry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Ry" title="Link to this definition"></a></dt>
+<dd><p>Apply an RZ gate via SymPy (requires SymPy)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta</strong> (<em>float</em>) – Rotation angle</p></li>
+<li><p><strong>target</strong> (<em>int</em>) – Qubit to apply the RZ gate to</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

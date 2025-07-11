@@ -11,6 +11,8 @@ import numpy as np
 
 import random as rand
 
+#import sympy
+
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Statevector, state_fidelity
 
@@ -85,9 +87,24 @@ def test_stabilizers():
                 break
     assert len(indices)==0
 
+def test_qiskit_methods():
+    candidate = [[i,(i+1)%6] for i in range(6)]
+    candidate.append([0,3])
+    candidate.append([2,5])
+    for i in range(6):
+        candidate.append([i,i+6])
+    state = Stabilizer(edgelist = candidate)
+    q1 = qiskit_circuit_solver(state)
+    q2 = qiskit_circuit_solver_alternate(state)
+    q3 = qiskit_circuit_solver(state, True)
+    q4 = qiskit_circuit_solver_alternate(state, True)
+    assert q1 == q2
+    assert q3 == q4
+
+
 def test_compare_qiskit():
     cap = 100
-    depth = 100
+    depth = 150
     for k in range(cap):
         print(k)
         state = Stabilizer(9)
@@ -114,6 +131,8 @@ def test_compare_qiskit():
                 qc.y(q1)
             elif gate == 'CNOT':
                 qc.cx(q1,q2)
+        for i in range(1,9):
+            state.row_add(0,i)
         stabs = state.stabilizers()
         phi = phi.evolve(qc)
         for stab in stabs:
@@ -161,6 +180,15 @@ def test_stabilizer_methods():
         state.report()
         state2 = state.clone()
         state2.stabilizer_measurement()
+
+def test_display():
+    edges = [[0, 1], [0, 2], [1, 2], [1, 3], [2, 3]]
+    graph = Graph(edges)
+    stabilizer = Stabilizer(edgelist = edges)
+    n_emitters = num_emitters(stabilizer)
+
+    expected_state = tensor(Qubit('0'*n_emitters), graph.state())
+    assert expected_state == expected_state
 
         
     

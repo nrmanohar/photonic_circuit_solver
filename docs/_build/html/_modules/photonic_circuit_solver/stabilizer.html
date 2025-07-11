@@ -87,7 +87,7 @@
 <a class="viewcode-back" href="../../api.html#photonic_circuit_solver.Stabilizer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Stabilizer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a bell state. If only the n is given, it will initialize n qubits in the 0 state</span>
+<span class="sd">    This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a two qubit bell state. If only the n is given, it will initialize the n qubit computational zero state</span>
 <span class="sd">    </span>
 <span class="sd">    :param n: Number of qubits</span>
 <span class="sd">    :type n: int, Optional (if providing edgelist)</span>
@@ -109,8 +109,6 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stabs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">edgelist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty Constructor&#39;</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">edgelist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>    
             <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stabs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

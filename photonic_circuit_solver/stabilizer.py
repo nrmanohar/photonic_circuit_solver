@@ -4,7 +4,7 @@ import math
 
 class Stabilizer:
     '''
-    This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a bell state. If only the n is given, it will initialize n qubits in the 0 state
+    This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a two qubit bell state. If only the n is given, it will initialize the n qubit computational zero state
     
     :param n: Number of qubits
     :type n: int, Optional (if providing edgelist)
@@ -26,8 +26,6 @@ class Stabilizer:
         """Constructor method
 
         """
-        if n is None and stabs is None and edgelist is None:
-            raise ValueError('Empty Constructor')
         
         if edgelist is None:    
             if n is None and stabs is None:

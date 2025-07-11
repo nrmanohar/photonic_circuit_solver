@@ -5,14 +5,13 @@ This page details how to get started with photonic_circuit_solver. This page cov
 
 Installation
 ------------
-To install photonic_circuit_solver, you will need an environment with the following packages:
+To install photonic_circuit_solver and use the Stabilizer class, you will need photonic_circuit_solver installed in an environment with the following packages:
 
 * Python 3.11 or superior
 * NumPy
-* Qiskit (Optional)
+* Qiskit (optional)
 * Matplotlib (optional)
 * Pylatexenc (optional)
-* Sympy (optional)
 
 Note, all computational aspects are done in NumPy. You only need Qiskit if you want to use any of the methods that output Qiskit circuits. Similar for the SymPy methods. You only need Matplotlib and Pylatexenc if you want to plot the circuit outside of the shell. If you just want do do computation, or are fine with the circuits being drawn in the shell by qiskit, these are not required.
 
@@ -76,6 +75,46 @@ If we generate a group from them we get :math:`G = \langle g_1,g_2\ldots g_m\ran
 Here's the key, let's generate a group :math:`G' = \langle g_1\ldots g_{i-1},g_{i+1}\ldots g_n\rangle` where we removed one arbitrary generator. No matter which generater we removed, :math:`G'\subset G`. In other words, removing one of the generators reduces the size of your group. If this is true, we say our generators are 'independant.'
 
 For large states, it's hard to determine by inspection. However, this package comes pre-built with verification for independence of generators.
+
+Density matrices
+`````````````````
+While we desribe pure states with a statevector :math:`|\psi\rangle`, we can also represent them by so called density matrices, traditionally denoted :math:`\rho`. For pure states, :math:`\rho = |\psi\rangle\langle\psi|`
+
+Density matrices allow us to talk about both pure states and mixed states. Suppose we want to run a circuit on a machine that randomly spits out the :math:`|0\rangle` or the :math:`|1\rangle` state with equal probability (note, this is not the :math:`|+\rangle` state, this is an inherently probabilistic machine.)
+
+We can write :math:`\rho = \frac{1}{2}|0\rangle\langle 0| +\frac{1}{2}|1\rangle\langle 0|`
+
+In general, :math:`\rho = \sum_{i}p_i|\psi_i\rangle\langle\psi_i |` where :math:`|\psi_i\rangle` are pure states and :math:`\sum_{i}p_i = 1`
+
+One can easily see that :math:`\text{Tr}(\rho) = 1`, and if we're talking about a pure state then :math:`\text{Tr}(\rho^2) = 1` as well. If we're talking about a mixed state, then :math:`\text{Tr}(\rho^2) < 1`
+
+Another way to characterize how 'mixed' a state is is to use the Von Neumann entropy. The Von Neumann entropy of a state is :math:`S = -\text{Tr}(\rho\ln(\rho))`, or equivalently :math:`S = -\sum_ip_i\ln(p_i)` if in its most simplified form :math:`\rho = \sum_{i}p_i|\psi_i\rangle\langle\psi_i |`
+
+The Von Neumann entropy is 0 if and only if a state is pure.
+
+The partial trace of a density matrix is equivalent to removing a set of qubits. One can think of it as someone measuring all those qubits, but throwing out the measurement outcome.
+
+Suppose we take our state and divide them into two sections, A and B. The entanglement entropy between the two sections is equivalent to the Von Neumann entropy of one of the sections if one traces out the other (it turns out they are equivalent.)
+
+For an example, suppose we had a pure bell state :math:`|\phi\rangle = \frac{1}{\sqrt{2}}(|00\rangle+|11\rangle)` and we want to measure the entanglement entropy between the two qubits.
+
+If someone measures the first qubit, and doesnt tell us the outcome, we're left with a mixed state that is 0 or 1 with equal probability, which we can represent as :math:`\rho = \frac{1}{2}(|0\rangle\langle 0|+|1\rangle\langle 1|)`
+
+If one computes the Von Neumann of that mixed state, we get :math:`\ln(2)`
+
+Suppose we instead had some weighted entangled state :math:`|\phi\rangle = \sqrt{\frac{99}{100}}|00\rangle+\frac{1}{\sqrt{100}}|11\rangle`. Following the same procedure as above, we get :math:`S = -\left(\frac{1}{100}\ln(\frac{1}{100})+\frac{99}{100}\ln(\frac{99}{100}))\approx 0.056`
+
+From this we see that the second state is much less entangled than the first.
+
+It turns out that the density matrix of a stabilizer state is actually easy to find. Suppose a stabilizer state is stabilized by generators :math:`\langle g_0,\ldots,g_n\rangle`.
+
+Then the density matrix of the stabilizer state is :math:`\prod_{i=1}^n\frac{I+g_i}{2}`. Since the stabilizers commute, the order doesn't matter.
+
+One should expect that the density matrix should be independant of the choice of generators, and in fact this is true. Suppose we index every element of the stabilizer group :math:`s_i`, where :math:`i` is an integer from 1 to :math:`N = 2^n`
+
+Then we find that :math:`\rho = \frac{1}{N}\sum_{i=1}^Ns_i`, and any choice of generators can be shown to be equivalent to this.
+
+The reason one may care about density matrices is that they are the more encompassing description of quantum states, and are important to the notion of entropy in the RREF section.
 
 Clifford Operations
 ````````````````````
