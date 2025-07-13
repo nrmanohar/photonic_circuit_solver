@@ -11,6 +11,8 @@ import numpy as np
 
 import random as rand
 
+import math
+
 #import sympy
 
 from qiskit import QuantumCircuit
@@ -24,6 +26,21 @@ from photonic_circuit_solver import *
 def test_photonic_circuit_solver_imported():
     """Sample test, will always pass so long as import statement worked."""
     assert "photonic_circuit_solver" in sys.modules
+
+def test_supplemental_basic():
+    edges = [[0, 1], [0, 2], [1, 2], [1, 3], [2, 3]]
+    graph = Graph(edges)
+    L = graph.draw()
+    state2 = graph.state()
+    state = Stabilizer(edgelist = edges)
+    n_emitters = num_emitters(state)
+    expected_state = tensor(Qubit('0'*n_emitters), graph.state())
+    protocol = circuit_solver(state)
+    circ = qiskit_circuit_solver(state)
+    g1 = Rz(0,math.pi)
+    g2 = Rx(0,math.pi)
+    g3 = Rx(0,math.pi)
+    print(circ)
 
 def test_basic():
     indices = []
@@ -47,6 +64,40 @@ def test_graph_states():
         ref.cz(i,(i+1)%5)
     phi = phi.evolve(ref)
     qc = QuantumCircuit(7)
+    for operation in operations:
+        if operation[0]=='H':
+            qc.h(operation[1])
+        elif operation[0] == 'Emission':
+            qc.cx(operation[1],operation[2])
+        elif operation[0]=='Z':
+            qc.z(operation[1])
+        elif operation[0]=='X':
+            qc.x(operation[1])
+        elif operation[0]=='Y':
+            qc.y(operation[1])
+        elif operation[0]=='S':
+            qc.s(operation[1])
+        elif operation[0]=='CNOT':
+            qc.cx(operation[1],operation[2])
+        elif operation[0]=='Measure':
+            qc.cx(operation[1],operation[2])
+            qc.h(operation[1])
+    psi = psi.evolve(qc)
+    assert np.isclose([state_fidelity(psi,phi)],[1])
+
+def test_graph_states_extended():
+    candidate = [[0,1],[1,2],[2,3],[3,0],[0,2]]
+    state = photonic_circuit_solver.Stabilizer(edgelist = candidate)
+    operations = photonic_circuit_solver.circuit_solver(state)
+    phi = Statevector.from_label('0'*6)
+    psi = Statevector.from_label('0'*6)
+    ref = QuantumCircuit(6)
+    for i in range(4):
+        ref.h(i)
+    for edge in candidate:
+        ref.cz(edge[0],edge[1])
+    phi = phi.evolve(ref)
+    qc = QuantumCircuit(6)
     for operation in operations:
         if operation[0]=='H':
             qc.h(operation[1])
@@ -227,11 +278,3 @@ def test_display():
 
     expected_state = tensor(Qubit('0'*n_emitters), graph.state())
     assert expected_state == expected_state
-
-        
-    
-
-
-
-
-

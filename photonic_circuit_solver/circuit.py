@@ -133,7 +133,6 @@ def plot_height(state: Stabilizer):
         plt.title('Target Height Function')
         plt.xlabel('x')
         plt.ylabel('h(x)')
-        plt.show()
     except:
         pass
 

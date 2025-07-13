@@ -9,7 +9,13 @@ except:
     pass
 try:
     import networkx as nx
+except:
+    pass
+try:
     import matplotlib.pyplot as plt
+except:
+    pass
+try:
     from IPython.display import clear_output
 except:
     pass
@@ -197,20 +203,15 @@ class Graph:
         self.edges = edges
 
 
-    def draw(self, figsize=(4, 4)) -> None:
+    def draw(self) -> None:
         '''
-        Method to draw the graph imported (requires NetworkX and Matplotlib)
-
-        :param figsize: Size of the figure outputted by Matplotlib (defaults to (4,4))
-        :type figsize: tuple or list
+        Method to generate an nx graph (requires NetworkX)
         
         '''
         G = nx.Graph()
+        G.add_nodes_from([i for i in range(self.n_qubits)])
         G.add_edges_from(self.edges)
-        plt.figure(figsize=figsize)
-        nx.draw(G, with_labels=True, font_weight='bold', node_size=700,
-                node_color="cornflowerblue", width=2.0, linewidths=4, edgecolors="royalblue")
-        plt.show()
+        return G
 
 
     def state(self, progress: bool = False):
