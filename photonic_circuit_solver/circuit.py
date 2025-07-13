@@ -204,6 +204,7 @@ def circuit_solver(state: Stabilizer):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         protocol.append(['S',i])
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         protocol.append(['H',i])
                         target_state.clifford('H',i)
                     break
@@ -215,6 +216,7 @@ def circuit_solver(state: Stabilizer):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         protocol.append(['S',i])
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         protocol.append(['H',i])
                         target_state.clifford('H',i)
                     protocol.append(['CNOT',i,emit])
@@ -244,6 +246,7 @@ def circuit_solver(state: Stabilizer):
         elif target_state.tab[row,photonindex]==1 and target_state.tab[row,photonindex+N]==1:
             protocol.append(['S',photonindex])
             target_state.clifford('S',photonindex)
+            target_state.clifford('Z',photonindex)
             protocol.append(['H',photonindex])
             target_state.clifford('H',photonindex)
 
@@ -256,6 +259,7 @@ def circuit_solver(state: Stabilizer):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     protocol.append(['S',i])
                     target_state.clifford('S',i)
+                    target_state.clifford('Z',i)
                     protocol.append(['H',i])
                     target_state.clifford('H',i)
                 break
@@ -268,6 +272,7 @@ def circuit_solver(state: Stabilizer):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         protocol.append(['S',i])
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         protocol.append(['H',i])
                         target_state.clifford('H',i)
                     protocol.append(['CNOT',i,emit])
@@ -296,10 +301,7 @@ def circuit_solver(state: Stabilizer):
         decoupled = False
     
     while not decoupled:
-        for i in range(2,N):
-            if i in sums:
-                minimum = i
-                break
+        minimum = min(i for i in sums if i > 1)
         row = n_p+sums.index(minimum)
         for i in range(n_p,N):
             if target_state.tab[row,i]!=0 or target_state.tab[row,i+N]!=0:
@@ -310,6 +312,7 @@ def circuit_solver(state: Stabilizer):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     protocol.append(['S',emit])
                     target_state.clifford('S',emit)
+                    target_state.clifford('Z',emit)
                     protocol.append(['H',emit])
                     target_state.clifford('H',emit)
                 break
@@ -321,6 +324,7 @@ def circuit_solver(state: Stabilizer):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     protocol.append(['S',i])
                     target_state.clifford('S',i)
+                    target_state.clifford('Z',i)
                     protocol.append(['H',i])
                     target_state.clifford('H',i)
                 target_state.clifford('CNOT',i,emit)
@@ -363,6 +367,7 @@ def circuit_solver(state: Stabilizer):
             elif target_state.tab[i,i]==1 and target_state.tab[i,i+N]==1:
                 protocol.append(['S',i])
                 target_state.clifford('S',i)
+                target_state.clifford('Z',i)
                 protocol.append(['H',i])
                 target_state.clifford('H',i)
     
@@ -445,6 +450,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         qc.s(i)
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         qc.h(i)
                         target_state.clifford('H',i)
                     break
@@ -456,6 +462,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         qc.s(i)
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         qc.h(i)
                         target_state.clifford('H',i)
                     qc.cx(i,emit)
@@ -488,6 +495,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
         elif target_state.tab[row,photonindex]==1 and target_state.tab[row,photonindex+N]==1:
             qc.s(photonindex)
             target_state.clifford('S',photonindex)
+            target_state.clifford('Z',photonindex)
             qc.h(photonindex)
             target_state.clifford('H',photonindex)
 
@@ -500,6 +508,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     qc.s(i)
                     target_state.clifford('S',i)
+                    target_state.clifford('Z',i)
                     qc.h(i)
                     target_state.clifford('H',i)
                 break
@@ -512,6 +521,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                     elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                         qc.s(i)
                         target_state.clifford('S',i)
+                        target_state.clifford('Z',i)
                         qc.h(i)
                         target_state.clifford('H',i)
                     qc.cx(i,emit)
@@ -554,6 +564,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     qc.s(emit)
                     target_state.clifford('S',emit)
+                    target_state.clifford('Z',emit)
                     qc.h(emit)
                     target_state.clifford('H',emit)
                 break
@@ -565,6 +576,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
                 elif target_state.tab[row,i]==1 and target_state.tab[row,i+N]==1:
                     qc.s(i)
                     target_state.clifford('S',i)
+                    target_state.clifford('Z',i)
                     qc.h(i)
                     target_state.clifford('H',i)
                 target_state.clifford('CNOT',i,emit)
@@ -607,6 +619,7 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
             elif target_state.tab[i,i]==1 and target_state.tab[i,i+N]==1:
                 qc.s(i)
                 target_state.clifford('S',i)
+                target_state.clifford('Z',i)
                 qc.h(i)
                 target_state.clifford('H',i)
     

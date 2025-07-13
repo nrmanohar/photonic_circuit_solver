@@ -98,7 +98,7 @@ We proxy the entanglement entropy by the so-called height function in (equation 
 
 This function effectively tells us how many generators have a nontrivial pauli further left than anticipated. This is a sign of entanglement, and thus requires an increase in the height function.
 
-For the sake of clarity, :math:`h(x)` proxies the entanglement entropy of tracing out the qubits starting from 0 up to and including :math:`x-1`.\\
+For the sake of clarity, :math:`h(x)` proxies the entanglement entropy of tracing out the qubits starting from 0 up to and including :math:`x-1`.
 
 From this, we see that :math:`h(0)` and :math:`h(n)` trace out no qubits and thus has no entanglement entropy.
 

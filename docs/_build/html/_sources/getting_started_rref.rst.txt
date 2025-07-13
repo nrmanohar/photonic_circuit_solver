@@ -98,7 +98,7 @@ We proxy the entanglement entropy by the so-called height function in (equation 
 
 This function effectively tells us how many generators have a nontrivial pauli further left than anticipated. This is a sign of entanglement, and thus requires an increase in the height function.
 
-For the sake of clarity, :math:`h(x)` proxies the entanglement entropy of tracing out the qubits starting from 0 up to and including :math:`x-1`.\\
+For the sake of clarity, :math:`h(x)` proxies the entanglement entropy of tracing out the qubits starting from 0 up to and including :math:`x-1`.
 
 From this, we see that :math:`h(0)` and :math:`h(n)` trace out no qubits and thus has no entanglement entropy.
 
@@ -134,7 +134,7 @@ We want to generate this circuit from solely emitters. We're first going to esta
 
 For clarity, emitters are indexed by :math:`i_k` and the photon we're preparing to absorb is indexed by :math:`j`
 
-We're going to generate the scheme backwards, starting from the graph state and zeroed out emitters and working backwards to the computational zero state. We start by emitting photon :math:`j = n_p-1` and work backwards till :math:`j = 0`
+We're going to generate the scheme backwards, starting from the graph state and zeroed out emitters and working backwards to the computational zero state. We do this because we model unabsorbed photons as being in the :math:`|0\rangle` state. We start by emitting photon :math:`j = n_p-1` and work backwards till :math:`j = 0`
 
 We mimic photon absorptions computationally via a CNOT gate. If :math:`h(j+1)\geq h(j)`, one can verify that due to the RREF gauge there exists a generator whose leading nontrivial Pauli is at site :math:`j`. Meanwhile, by design of the algorithm (which we will get to a bit later), all the other photon sites after :math:`j` until the emitters are also trivial.
 
@@ -146,7 +146,7 @@ This generator can, through single qubit gates on the photon and through gates o
 
 Then, noting that :math:`\text{CNOT}_{i,j}\sigma^Z_j\sigma^Z_i = \sigma^Z_j\text{CNOT}_{i,j}`, upon absorbing the photon, we have disentangled the photon. We then take that generator to clear the column so that for all other generators, :math:`\sigma_j = I`. This is why we could assume that on that generator, the paulis at all the sites after :math:`j` until the emitters are trivial, because those photons have already been absorbed and disentangled.
 
-However, what if :math:`h(j+1)<h(j)>`. This can be shown to mean that the photon is entangled with the other photons.
+However, what if :math:`h(j+1)<h(j)`. This can be shown to mean that the photon is entangled with the other photons.
 
 However, at this stage we assume that this photon is already emitted. This unfortunately means we can't directly break this entanglement, but we can indirectly via a time-reverse measurement.
 
@@ -161,4 +161,7 @@ We note that this is equivalent to taking the state :math:`\text{CNOT}_{ij}|\Phi
 It is also equivalent :math:`\text{CNOT}_{ij}|\Phi\rangle\otimes|+\rangle_i`, measuring a 1, then zeroing out the emitter and applying a correction X gate to the photon :math:`j`
 
 As such, in the time reverse direction, we proxy (computationally) this by applying a Hadamard to the emitter :math:`i` and a CNOT between the emitter :math:`i` and the photon :math:`j`. It should be emphasized
-that this is done for computational accuracy. In the actual time-forward circuit, this is just a measurement and a conditional gate, since we
+that this is done for computational accuracy. In the actual time-forward circuit, this is just a measurement and a conditional gate, since we forbid direct photon-emitter interactions
+other than the act of emission itself. It can also be shown that upon doing this time-reverse measurement, :math:`h(j+1)\geq h(j)` and thus we are ready for a photon absorption.
+
+Regardless of whether or not a time-reverse measurement is needed, upon the absorbing of photon :math:`j` we move to absorbing photon :math:`j-1` until we've fully absorbed the entire graph state. Then we simply reverse the circuit to create a circuit that generates a photonic graph state from emitter qubits.

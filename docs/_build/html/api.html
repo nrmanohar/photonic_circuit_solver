@@ -78,6 +78,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.report"><code class="docutils literal notranslate"><span class="pre">Stabilizer.report()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.row_add"><code class="docutils literal notranslate"><span class="pre">Stabilizer.row_add()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.row_commute"><code class="docutils literal notranslate"><span class="pre">Stabilizer.row_commute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.rref"><code class="docutils literal notranslate"><span class="pre">Stabilizer.rref()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.stabilizer_measurement"><code class="docutils literal notranslate"><span class="pre">Stabilizer.stabilizer_measurement()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.stabilizers"><code class="docutils literal notranslate"><span class="pre">Stabilizer.stabilizers()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photonic_circuit_solver.Stabilizer.swap"><code class="docutils literal notranslate"><span class="pre">Stabilizer.swap()</span></code></a></li>
@@ -208,7 +209,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>type</strong> (<em>string</em>) – The clifford gate to be operated, ‘H’, ‘X’, ‘Y’, ‘Z’, ‘CNOT’, ‘CZ’, or ‘S’</p></li>
+<li><p><strong>type</strong> (<em>string</em>) – The clifford gate to be operated, ‘H’, ‘X’, ‘Y’, ‘Z’, ‘CNOT’ or ‘CX’, ‘CZ’, or ‘S’</p></li>
 <li><p><strong>q1</strong> (<em>int</em>) – The qubit to operate on, or the control qubit for entangling gates</p></li>
 <li><p><strong>q2</strong> (<em>int</em>) – The qubit to target, defaults to None</p></li>
 </ul>
@@ -238,13 +239,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.draw_circuit">
-<span class="sig-name descname"><span class="pre">draw_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mpl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.draw_circuit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.draw_circuit" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">draw_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.draw_circuit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.draw_circuit" title="Link to this definition"></a></dt>
 <dd><p>Draws a circuit that can generate the given stabilizer state (requires qiskit, matplotlib and pylatexenc package)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>style</strong> (<em>String</em><em>, </em><em>optional. Defaults to 'mpl'</em>) – The type of output, ‘mpl’ for matplotlib, ‘text’ for ASCII drawing, ‘latex_source’ for raw latex output</p></li>
-<li><p><strong>save</strong> (<em>String</em>) – If you want to save the file to something (optional)</p></li>
+<li><p><strong>style</strong> (<em>string</em><em>, </em><em>optional. Defaults to 'text'</em>) – The type of output, ‘mpl’ for matplotlib, ‘text’ for ASCII drawing, ‘latex_source’ for raw latex output</p></li>
+<li><p><strong>save</strong> (<em>string</em>) – If you want to save the file to something (optional)</p></li>
 </ul>
 </dd>
 </dl>
@@ -358,7 +359,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.row_add">
 <span class="sig-name descname"><span class="pre">row_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.row_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.row_add" title="Link to this definition"></a></dt>
-<dd><p>Multiplies two stabilizers in the tableau together, specifying a new stabilizer, and puts them into the second row</p>
+<dd><p>Multiplies two stabilizers in the tableau together, and puts them into the second row</p>
 </dd></dl>
 
 <dl class="py method">
@@ -379,6 +380,12 @@
 <dd class="field-odd"><p>boolean</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="photonic_circuit_solver.Stabilizer.rref">
+<span class="sig-name descname"><span class="pre">rref</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/photonic_circuit_solver/stabilizer.html#Stabilizer.rref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#photonic_circuit_solver.Stabilizer.rref" title="Link to this definition"></a></dt>
+<dd><p>Implements the RREF gauge procedure (details in doi.org/10.1088/1367-2630/7/1/170)</p>
 </dd></dl>
 
 <dl class="py method">

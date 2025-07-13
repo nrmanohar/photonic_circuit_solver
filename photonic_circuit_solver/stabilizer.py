@@ -262,7 +262,7 @@ class Stabilizer:
         """
         Applies a clifford gate to the stabilizer
 
-        :param type: The clifford gate to be operated, 'H', 'X', 'Y', 'Z', 'CNOT', 'CZ', or 'S'
+        :param type: The clifford gate to be operated, 'H', 'X', 'Y', 'Z', 'CNOT' or 'CX', 'CZ', or 'S'
         :type type: string
 
         :param q1: The qubit to operate on, or the control qubit for entangling gates
@@ -276,7 +276,7 @@ class Stabilizer:
             for i in range(self.size):
                 if self.tab[i,q1]*self.tab[i,q1+self.size]==1:
                     self.signvector[i]=(self.signvector[i]+1)%2
-        elif type.lower() == 'cnot':
+        elif type.lower() == 'cnot' or type.lower() == 'cx':
             if q2 == None:
                 raise ValueError('Second qubit not specified for cnot gate')
             elif q1 == q2:
@@ -424,9 +424,9 @@ class Stabilizer:
         else:
             return False
 
-    def row_add(self,row1: int,row2: int):
+    def row_add(self,row1: int, row2: int):
         """
-        Multiplies two stabilizers in the tableau together, specifying a new stabilizer, and puts them into the second row
+        Multiplies two stabilizers in the tableau together, and puts them into the second row
 
         """
         if row1==row2:
@@ -463,8 +463,8 @@ class Stabilizer:
                             phase_tracker -= 1
                     self.tab[row2,i] = (self.tab[row2,i]+self.tab[row1,i])%2
                     self.tab[row2,i+self.size] = (self.tab[row2,i+self.size]+self.tab[row1,i+self.size])%2
-        phase_tracker = (phase_tracker%4)/2
-        self.signvector[row2] = (self.signvector[row1]+self.signvector[row2]+phase_tracker)%2
+            phase_tracker = (phase_tracker%4)/2
+            self.signvector[row2] = (self.signvector[row1]+self.signvector[row2]+phase_tracker)%2
                 
 
     def circuit_builder(self):
@@ -476,117 +476,127 @@ class Stabilizer:
         """
         reference = np.copy(self.tab)
         sign = np.copy(self.signvector)
-        rev_operations = []
-
-        broken = False
-
         try:
-            from qiskit import QuantumCircuit
+            from qiskit import QuantumCircuit, transpile
         except:
             raise ImportError('Qiskit failed to Import')
-
+        qc = QuantumCircuit(self.size)
+        self.rref()
+        sums = []
         for i in range(self.size):
-            if self.tab[i,i]==0:
-                if self.tab[i,i+self.size]==1:
-                    rev_operations.append(['H',i])
-                    self.clifford('H',i)
-            if self.tab[i,i]==0:
-                for j in range(i+1,self.size):
-                    if self.tab[j,i]==1:
-                        self.tab[[i,j]]=self.tab[[j,i]]
-                        self.signvector[[i,j]]=self.signvector[[j,i]]
-                        break
-            if self.tab[i,i]==0:
-                for j in range(i+1,self.size):
-                    if self.tab[j,i+self.size]==1:
-                        self.tab[[i,j]]=self.tab[[j,i]]
-                        self.signvector[[i,j]]=self.signvector[[j,i]]
-                        rev_operations.append(['H',i])
-                        self.clifford('H',i)
-                        break
-            if self.tab[i,i]==0:
-                for j in range(i):
-                    if self.tab[j,i+self.size]==1:
-                        self.row_add(j,i)
-                        rev_operations.append(['H',i])
-                        self.clifford('H',i)
-                        break
-            if self.tab[i,i]==0:
-                broken = True
-                break
-            elif self.tab[i,i]==1:
-                for j in range(self.size):
-                    if self.tab[i,j]==1 and j!=i:
-                        rev_operations.append(["CNOT",i,j])
-                        self.clifford("CNOT",i,j)
-                
-
-        if broken:
-            self.tab = np.copy(reference)
-            self.signvector = np.copy(sign)
-            print("Something went wrong in the building procedure. Check your stabilizers and maybe reformat them and try again")
-            return None
-
-        for i in range(self.size):
-            if self.tab[i,i+self.size]==1:
-                rev_operations.append(["S",i])
-                self.clifford("S",i)
-
-        for i in range(self.size):
+            sum=0
             for j in range(self.size):
-                if self.tab[i,j+self.size]==1:
-                    rev_operations.append(["CZ",i,j])
-                    self.clifford("CZ",i,j)
+                if self.tab[i,j]!=0 or self.tab[i,j+self.size]!=0:
+                    sum+=1
+            sums.append(sum)
+        if max(sums)==1:
+            decoupled = True
+        else:
+            decoupled = False
+        while not decoupled:
+            minimum = min(i for i in sums if i > 1)
+            row = sums.index(minimum)
+            xcount = 0
+            for i in range(self.size):
+                xcount+=self.tab[row,i]
 
+            if self.size-xcount>xcount:
+                for i in range(self.size):
+                    if self.tab[row,i]!=0 or self.tab[row,i+self.size]!=0:
+                        if self.tab[row,i]==1 and self.tab[row,i+self.size]==0:
+                            self.clifford('h',i)
+                            qc.h(i)
+                        elif self.tab[row,i]==1 and self.tab[row,i+self.size]==1:
+                            self.clifford('s',i)
+                            self.clifford('z',i)
+                            qc.s(i)
+                            self.clifford('h',i)
+                            qc.h(i)
+                        emit = i
+                        break
+                for i in range(emit+1,self.size):
+                    if self.tab[row,i]!=0 or self.tab[row,i+self.size]!=0:
+                        if self.tab[row,i]==1 and self.tab[row,i+self.size]==0:
+                            self.clifford('h',i)
+                            qc.h(i)
+                        elif self.tab[row,i]==1 and self.tab[row,i+self.size]==1:
+                            self.clifford('s',i)
+                            self.clifford('z',i)
+                            qc.s(i)
+                            self.clifford('h',i)
+                            qc.h(i)
+                        self.clifford('cnot',i,emit)
+                        qc.cx(i,emit)
+            else:
+                for i in range(self.size):
+                    if self.tab[row,i]!=0 or self.tab[row,i+self.size]!=0:
+                        if self.tab[row,i]==0 and self.tab[row,i+self.size]==1:
+                            self.clifford('h',i)
+                            qc.h(i)
+                        elif self.tab[row,i]==1 and self.tab[row,i+self.size]==1:
+                            self.clifford('s',i)
+                            self.clifford('z',i)
+                            qc.s(i)
+                        emit = i
+                        break
+                for i in range(emit+1,self.size):
+                    if self.tab[row,i]!=0 or self.tab[row,i+self.size]!=0:
+                        if self.tab[row,i]==0 and self.tab[row,i+self.size]==1:
+                            self.clifford('h',i)
+                            qc.h(i)
+                        elif self.tab[row,i]==1 and self.tab[row,i+self.size]==1:
+                            self.clifford('s',i)
+                            self.clifford('z',i)
+                            qc.s(i)
+                        self.clifford('cnot',emit,i)
+                        qc.cx(emit,i)
+            for i in range(self.size):
+                if self.tab[i,emit]!=0 or self.tab[i,emit+self.size]!=0:
+                    self.row_add(row,i)    
+            sums = []
+            for i in range(self.size):
+                sum=0
+                for j in range(self.size):
+                    if self.tab[i,j]!=0 or self.tab[i,j+self.size]!=0:
+                        sum+=1
+                sums.append(sum)    
+            if max(sums)==1:
+                decoupled = True
+            else:
+                decoupled = False
+        self.rref()
         for i in range(self.size):
-            self.clifford('H',i)
-            rev_operations.append(['H',i])
-        
-        for i in range(self.size):
+            if self.tab[i,i]==1 and self.tab[i,i+self.size]==0:
+                self.clifford('H',i)
+                qc.h(i)
+            elif self.tab[i,i]==1 and self.tab[i,i+self.size]==1:
+                self.clifford('S',i)
+                self.clifford('Z',i)
+                self.clifford('H',i)
+                qc.s(i)
+                qc.h(i)
             if self.signvector[i]==1:
-                rev_operations.append(['X',i])
                 self.clifford('X',i)
-        
+                qc.x(i)
         self.tab = np.copy(reference)
         self.signvector = np.copy(sign)
-        
-        rev_operations.reverse()
+        qc.data = qc.data[::-1]
+        basis_set = ['id', 'cx', 'h', 's', 'x', 'z', 'y', 'cz']
+        return transpile(qc, basis_gates = basis_set)
 
-        circuit = QuantumCircuit(self.size)
-
-        
-        for i in range(len(rev_operations)):
-            if rev_operations[i][0]=='H':
-                circuit.h(rev_operations[i][1])
-            elif rev_operations[i][0]=='S':
-                circuit.s(rev_operations[i][1])
-                circuit.z(rev_operations[i][1])
-            elif rev_operations[i][0]=='X':
-                circuit.x(rev_operations[i][1])
-            elif rev_operations[i][0]=='Y':
-                circuit.y(rev_operations[i][1])
-            elif rev_operations[i][0]=='Z':
-                circuit.z(rev_operations[i][1])
-            elif rev_operations[i][0]=='CNOT':
-                circuit.cx(rev_operations[i][1],rev_operations[i][2])
-            elif rev_operations[i][0]=='CZ':
-                circuit.cz(rev_operations[i][1],rev_operations[i][2])
-        return circuit
-
-    def draw_circuit(self, style = 'mpl', save = None):
+    def draw_circuit(self, style = 'text', save = None):
         """
         Draws a circuit that can generate the given stabilizer state (requires qiskit, matplotlib and pylatexenc package)
 
         :param style: The type of output, 'mpl' for matplotlib, 'text' for ASCII drawing, 'latex_source' for raw latex output
-        :type style: String, optional. Defaults to 'mpl'
+        :type style: string, optional. Defaults to 'text'
 
         :param save: If you want to save the file to something (optional)
-        :type save: String
+        :type save: string
 
         """
         if style == 'mpl':
             try:
-                import matplotlib
                 import matplotlib.pyplot as plt
                 try:
                     circ = self.circuit_builder()
@@ -632,7 +642,7 @@ class Stabilizer:
 
         """
         try:
-            from qiskit import QuantumCircuit, QuantumRegister,ClassicalRegister
+            from qiskit import QuantumCircuit,ClassicalRegister
         except:
             raise ImportError('Qiskit not installed')
         qs = QuantumCircuit(2*self.size)
@@ -734,6 +744,59 @@ class Stabilizer:
         int = self.size
         state = Stabilizer(n=int,stabs=newstab)
         return state
+    def rref(self):
+        """
+        Implements the RREF gauge procedure (details in doi.org/10.1088/1367-2630/7/1/170)
+
+        """    
+
+        N=self.size
+        K=N
+        KU=0
+        NL=0
+        while NL<N-1 and KU<K-1:
+            zeroitem = True
+            oneitem = False
+            twoitem = False
+            r1=N
+            r2=N
+            for k in range(KU,K):
+                if self.tab[k,NL]!=0 or self.tab[k,NL+N]!=0:
+                    r1 = k
+                    zeroitem = False
+                    oneitem = True
+                    break
+            for k in range(r1,K):
+                if self.tab[k,NL]!=0 or self.tab[k,NL+N]!=0:
+                    if self.tab[k,NL]!=self.tab[r1,NL] or self.tab[k,NL+N]!=self.tab[r1,NL+N]:
+                        r2 = k
+                        oneitem = False
+                        twoitem = True
+                        break
+            if zeroitem:
+                NL+=1
+            elif oneitem:
+                self.swap(KU,r1)
+                for i in range(KU+1,K):
+                    if self.tab[i,NL]!=0 or self.tab[i,NL+N]!=0:
+                        self.row_add(KU,i)
+                KU+=1
+                NL+=1
+            elif twoitem:
+                self.swap(KU,r1)
+                self.swap(KU+1,r2)
+                for i in range(KU+2,K):
+                    if self.tab[i,NL]!=0 or self.tab[i,NL+N]!=0:
+                        if self.tab[i,NL]==self.tab[KU,NL] and self.tab[i,NL+N]==self.tab[KU,NL+N]:
+                            self.row_add(KU,i)
+                        elif self.tab[i,NL]==self.tab[KU+1,NL] and self.tab[i,NL+N]==self.tab[KU+1,NL+N]:
+                            self.row_add(KU+1,i)
+                        else:
+                            self.row_add(KU,i)
+                            self.row_add(KU+1,i)
+                NL+=1
+                KU+=2
+
 
 if __name__ == "__main__":
     # Do something if this file is invoked on its own
