@@ -15,10 +15,13 @@ To install photonic_circuit_solver and use the rref functions and supplemental f
 * Matplotlib (optional)
 * SymPy (optional)
 
-As in Stabilizer, the core computation is all done using NumPy as native python data types, all optional packages are for visual and style utility. Qiskit is needed for any functions that output qiskit circuits, Matplotlib is needed for any plotting functions, and SymPy is needed for functions in the supplemental functions.
+As in Stabilizer, the core computation is all done using NumPy as native python data types, all optional packages are for visual and style utility. Qiskit is needed for any functions that output qiskit circuits, Matplotlib is needed for any plotting functions, and SymPy is needed for functions in the supplemental functions. 
 
 RREF Gauge Choice
 -------------------
+
+The RREF Gauge
+```````````````
 
 In the Stabilizer section, we noted that the choice of generators for representing a stabilizer state is not unique. However, given a choice of generators, there is a way to bring it into a form that is similar to the upper triangular form of the RREF linear operation on matrices. This protocol is called the RREF algorithm, and further details can be found at https://doi.org/10.1088/1367-2630/7/1/170.
 
@@ -71,6 +74,15 @@ returns
 
 As expected.
 
+Equivalently, RREF is a method implemented in the Stabilizer class. To replicate the above, one can also do.
+
+.. code-block:: python
+
+    from photonic_circuit_solver import *
+    state = Stabilizer(edgelist = [[0,1],[1,3],[3,2],[2,0],[1,2]])
+    state.rref()
+    state.stabilizers()
+
 For the sake of all future work, we are going to emit the hexagonal ring graph from the previous section.
 
 .. image:: Plot5.jpg
@@ -116,10 +128,27 @@ We can plot this using the ``plot_height()`` function
   :width: 400
   :alt: Height function associated with the hexagonal ring with normal ordering, [0,1,2,2,2,1,0]
 
-From this, we note that we need at least 2 emitters to generate this state from solely emitters
+From this, we note that we need at least 2 emitters to generate this state from solely emitters.
+
+If we just want that number, we can call the ``num_emitters`` function.
+
+.. code-block:: python
+
+    from photonic_circuit_solver import *
+    state = Stabilizer(edgelist = [[i,(i+1)%6] for i in range(6)])
+    print(num_emitters(state))
+
+The above code returns
+
+::
+
+    2
 
 Circuit Solving Algorithm
 --------------------------
+
+Overview
+`````````
 
 This section outlines the circuit solving algorithm found here: doi.org/10.1038/s41534-022-00522-6
 
@@ -164,4 +193,64 @@ As such, in the time reverse direction, we proxy (computationally) this by apply
 that this is done for computational accuracy. In the actual time-forward circuit, this is just a measurement and a conditional gate, since we forbid direct photon-emitter interactions
 other than the act of emission itself. It can also be shown that upon doing this time-reverse measurement, :math:`h(j+1)\geq h(j)` and thus we are ready for a photon absorption.
 
-Regardless of whether or not a time-reverse measurement is needed, upon the absorbing of photon :math:`j` we move to absorbing photon :math:`j-1` until we've fully absorbed the entire graph state. Then we simply reverse the circuit to create a circuit that generates a photonic graph state from emitter qubits.
+Regardless of whether or not a time-reverse measurement is needed, upon the absorbing of photon :math:`j` we move to absorbing photon :math:`j-1` until we've fully absorbed the entire graph state.
+
+All the photons are now disentangled. We're now left with a set of emitter qubits entangled with each other. However, since on emitter qubits we're allowed to use entangling gates, this entangement can be directly broken up systematically. This package identifies the generator with least weight (least number of nontrivial Paulis) greater than 1, identifies an emitter to decouple, decouples that emitter, and then continues until all the emitters are disentangled.
+
+However, note that want to be in the computational zero state. This is easy to fix with emitters, but not as easy with photons since we can't act on the emitter prior to emission. Here's the solution The package uses.
+
+Suppose that we're absorbing photon :math:`j`. By the algorithm described, prior to absorption the generator we're examining is of the form :math:`\pm\sigma_j^Z\sigma_i^Z`. Let's suppose its of the form :math:`-\sigma_j^Z\sigma_i^Z`. Then an :math:`X` gate on either the photon or emitter will correct this sign, and upon the photon absorption process the generator will
+be of the form :math:`\sigma^Z_j`. Heuristically, we want to minimize the number of gates on the emitter, so this protocol involves doing this gate on the photon.
+
+Following this procedure, we have now converted the photonic graph state and a set of zeroed out emitter qubits into the computational zero state. Now, the emission protocol is just reversing this circuit. For the time-reversed measurements, replace the CNOT and Hadamard with a measurement on the emitter, and depending on the measurement outcome a conditional :math:`X` gate on the photon.
+
+Implementation
+````````````````
+
+There are two functions that solve the circuit, which output different things depending on your preference. ``circuit_solver`` 
+and ``qiskit_circuit_solver``. ``circuit_solver`` outputs a list of procedures to follow in a list format. ``qiskit_circuit_solver`` outputs a qiskit circuit object that encodes the same circuit. Both directly implement the circuit solving algorithm.
+
+There is also ``qiskit_circuit_solver_alternate``, which implements the circuit solver algorithm indirectly. It calls ``circuit_solver`` to return a protocol, and then uses that protocol to generate the qiskit circuit, unlike ``qiskit_circuit_solver`` which generates it directly. In testing, it was found that 
+for simple circuits, ``qiskit_circuit_solver_alternate`` was faster, whereas for more complicated circuits ``qiskit_circuit_solver`` tended to be faster, so both versions were kept.4
+
+Lets implement these procedures using the example state above
+
+.. code-block:: python
+
+    from photonic_circuit_solver import *
+    state = Stabilizer(edgelist = [[i,(i+1)%6] for i in range(6)])
+    protocol = circuit_solver(state)
+
+This generates the following list.
+
+::
+
+    [['H', 7], ['H', 6], ['Emission', 6, 0], ['CNOT', 7, 6], ['H', 7], ['H', 0], ['Emission', 6, 1], ['H', 6], ['Emission', 6, 2], ['CNOT', 7, 6], ['H', 7], ['H', 6], ['Emission', 6, 3], ['CNOT', 7, 6], ['H', 6], ['Emission', 7, 4], ['H', 7], ['H', 4], ['Measure', 7, 4], ['Emission', 6, 5], ['H', 6], ['H', 5], ['Measure', 6, 5]]
+
+Note that this is a rather long list, despite this being a relatively simple circuit. For clarifications, qubits 0-5 represent the photons, and 6-7 are the two emitters.
+
+If we want to just visualize this, we can instead use the qiskit methods
+
+.. code-block:: python
+
+    from photonic_circuit_solver import *
+    state = Stabilizer(edgelist = [[i,(i+1)%6] for i in range(6)])
+    qc = qiskit_circuit_solver(state)
+    qc.draw(output = 'mpl')
+    plt.show()
+
+Which generates the following qiskit circuit.
+
+.. image:: Plot7.png
+  :width: 800
+  :alt: Circuit to generate hexagonal ring graph from a set of two emitters.
+
+Other functionalities
+```````````````````````
+
+There are a few other functions that one can utilize.
+
+The first, one can find just the number of CNOT gates (between emitters) needed by calling the function ``num_cnots``
+
+If one wants to know both the number of emitters and the number of CNOTs, one can also call the function ``emitter_cnot`` which returns an ordered list where the first entry 
+is the number of emitters, and the second entry is the number of CNOTs.

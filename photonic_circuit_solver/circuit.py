@@ -159,7 +159,7 @@ def circuit_solver(state: Stabilizer):
     :param state: Stabilizer state from which to calculate the height function
     :type state: Stabilizer
 
-    :return: Procedure to generate the state
+    :return: Procedure to generate the state, of the form ['Action', q1, q2 (if applicable)]. 'Action' can be 'X', 'Z', 'H', 'S', 'CNOT', 'Measure', or 'Emission'. For 'CNOT', q1 is the control and q2 is the target. For emission and measure, q1 is the emitter and q2 is the photon.
     :rtype: list
 
     """   

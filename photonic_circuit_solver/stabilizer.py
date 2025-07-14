@@ -7,9 +7,9 @@ class Stabilizer:
     This is a class that encodes the stabilizer state in terms of its stabilizers. If no input is given, it will initialize a two qubit bell state. If only the n is given, it will initialize the n qubit computational zero state
     
     :param n: Number of qubits
-    :type n: int, Optional (if providing edgelist)
+    :type n: int, Optional (only if providing edgelist)
 
-    :param stabs: The stabilizers, either in a string or a list, in the format 'XX,-YY' or '[XX,-YY]' (case sensitive). Optional
+    :param stabs: The stabilizers, either in a string or a list, in the format 'XX,-YY' or '[XX,-YY]'. Optional
     :type stabs: list or string, optional (initializes zero state by default)
 
     :param edgelist: A list of edges for a graph state. Optional
@@ -173,13 +173,13 @@ class Stabilizer:
                 sign[i]=1
                 self.__stab[i]=self.__stab[i][1:]
             for j in range(len(self.__stab[i])):
-                if self.__stab[i][j]=='I':
+                if self.__stab[i][j].upper()=='I':
                     pass
-                elif self.__stab[i][j]=='X':
+                elif self.__stab[i][j].upper()=='X':
                     tab[i,j]=1
-                elif self.__stab[i][j]=='Z':
+                elif self.__stab[i][j].upper()=='Z':
                     tab[i,j+self.size]=1
-                elif self.__stab[i][j]=='Y':
+                elif self.__stab[i][j].upper()=='Y':
                     tab[i,j]=1
                     tab[i,j+self.size]=1
                 else:
@@ -262,7 +262,7 @@ class Stabilizer:
         """
         Applies a clifford gate to the stabilizer
 
-        :param type: The clifford gate to be operated, 'H', 'X', 'Y', 'Z', 'CNOT' or 'CX', 'CZ', or 'S'
+        :param type: The clifford gate to be operated, 'H', 'X', 'Y', 'Z', 'CNOT' or 'CX', 'SWAP', 'CZ', or 'S'
         :type type: string
 
         :param q1: The qubit to operate on, or the control qubit for entangling gates
@@ -288,6 +288,14 @@ class Stabilizer:
                     if self.tab[i,q1]==1 and self.tab[i,q2+self.size]==1:
                         if self.tab[i,q2]==self.tab[i,self.size+q1]:
                             self.signvector[i]=(self.signvector[i]+1)%2
+        elif type.lower() == 'swap':
+            if q2 == None:
+                raise ValueError('Second qubit not specified for swap gate')
+            elif q1 == q2:
+                pass
+            else:
+                self.tab[:,[q1,q2]] = self.tab[:,[q2,q1]]
+                self.tab[:,[q1+self.size,q2+self.size]] = self.tab[:,[q2+self.size,q1+self.size]]
         elif type.lower() == 'z':
             for i in range(self.size):
                 if self.tab[i,q1]==1:
@@ -344,10 +352,16 @@ class Stabilizer:
     
     def measurement(self, stabilizers: list|str, outcomes:list = None):
         """
-        Implements a measurement of a Pauli string with a specified outcome
+        Implements a measurement of a Pauli string with a specified outcome (Pauli string shouldn't have a sign on it, use the outcomes to denote sign. Ex, measuring -X is equivalent to measurement 'X', [1])
+
+        If the state is measured by a Pauli that is a stabilizer of the state (modulo sign) then the measurement does nothing and is ignored. 
+        Note, since the measurement stabilizer is already a member of the stabilizer group, there is only one valid measurement outcome. As of right now, the code doesn't verify that whether what you provided matches the expected outcome.
 
         :param stabilizers: The set of stabilizers that were measured, in order
-        :param outcomes: The outcomes of these measurements (defaults to zero for all)
+        :type stabilizers: str
+
+        :param outcomes: The outcomes of these measurements (defaults to 0 for all, can put 0 or 1)
+        :type outcomes: list
         
         """
         try:
@@ -361,21 +375,36 @@ class Stabilizer:
 
         if outcomes == None:
             outcomes = [0 for i in range(len(stabilizers))]
-        stabs = self.stabilizers()
         for i in range(len(stabilizers)):
+            stabs = self.stabilizers()
             for j in range(len(stabs)):
                 if not self.row_commute(stabs[j],stabilizers[i]):
                     index = j
                     break
-            for k in range(index+1,len(stabs)):
-                if not self.row_commute(stabs[k],stabilizers[i]):
-                    self.row_add(index,k)
+            if index is not None:
+                for k in range(index+1,len(stabs)):
+                    if not self.row_commute(stabs[k],stabilizers[i]):
+                        self.row_add(index,k)
+                if outcomes[i]==1:
+                    self.signvector[index]=1
+                for k in range(self.size):
+                    if stabilizers[i][k] == 'I':
+                        self.tab[index,k] = 0
+                        self.tab[index,k+self.size] = 0
+                    elif stabilizers[i][k]=='X':
+                        self.tab[index,k] = 1
+                        self.tab[index,k+self.size] = 0
+                    elif stabilizers[i][k]=='Z':
+                        self.tab[index,k] = 0
+                        self.tab[index,k+self.size] = 1
+                    elif stabilizers[i][k]=='Y':
+                        self.tab[index,k] = 1
+                        self.tab[index,k+self.size] = 1
+            elif index is None:
+                pass
+            print(self.stabilizers())
 
-            stabs = self.stabilizers()
-            if outcomes[i]==1:
-                stabilizers[i] = '-'+stabilizers[i]
-            stabs[index]=stabilizers[i]
-            self.new_stab(self.size,stabs)
+
 
     def report(self):
         """
