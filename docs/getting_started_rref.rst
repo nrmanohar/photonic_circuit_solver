@@ -197,12 +197,13 @@ Regardless of whether or not a time-reverse measurement is needed, upon the abso
 
 All the photons are now disentangled. We're now left with a set of emitter qubits entangled with each other. However, since on emitter qubits we're allowed to use entangling gates, this entangement can be directly broken up systematically. This package identifies the generator with least weight (least number of nontrivial Paulis) greater than 1, identifies an emitter to decouple, decouples that emitter, and then continues until all the emitters are disentangled.
 
-However, note that want to be in the computational zero state. This is easy to fix with emitters, but not as easy with photons since we can't act on the emitter prior to emission. Here's the solution The package uses.
+However, note that want we to be in the computational zero state. This means all the signs of the generators need to be + (or equivalently, all the entries in the signvector are 0). This is easy to fix with emitters, but not as easy with photons since we can't act on the emitter prior to emission.
 
-Suppose that we're absorbing photon :math:`j`. By the algorithm described, prior to absorption the generator we're examining is of the form :math:`\pm\sigma_j^Z\sigma_i^Z`. Let's suppose its of the form :math:`-\sigma_j^Z\sigma_i^Z`. Then an :math:`X` gate on either the photon or emitter will correct this sign, and upon the photon absorption process the generator will
+However, we can correct for the phase immediatly before absorption (or in the time forward direction, immediately after emission). Suppose that we're absorbing photon :math:`j`. By the algorithm described, prior to absorption the generator we're examining is of the form :math:`\pm\sigma_j^Z\sigma_i^Z`. Let's suppose its of the form :math:`-\sigma_j^Z\sigma_i^Z`. Then an :math:`X` gate on either the photon or emitter will correct this sign, and upon the photon absorption process the generator will
 be of the form :math:`\sigma^Z_j`. Heuristically, we want to minimize the number of gates on the emitter, so this protocol involves doing this gate on the photon.
 
-Following this procedure, we have now converted the photonic graph state and a set of zeroed out emitter qubits into the computational zero state. Now, the emission protocol is just reversing this circuit. For the time-reversed measurements, replace the CNOT and Hadamard with a measurement on the emitter, and depending on the measurement outcome a conditional :math:`X` gate on the photon.
+Following this procedure, we have now converted the photonic graph state and a set of zeroed out emitter qubits into the computational zero state. Now, the emission protocol is just reversing this circuit. For the time-reversed measurements, replace the CNOT and Hadamard with a measurement on the emitter, and depending on the measurement outcome a conditional :math:`X` gate on the photon. 
+It's also important to correct for phase gates, since its not only non-hermitian unitary utilized by the algorithm. This algorithm records using the phase gate :math:`S`, but in reality implements :math:`S\dag` computationally so that :math:`S` is the proper gate in the time forward direction.
 
 Implementation
 ````````````````
