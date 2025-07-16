@@ -773,16 +773,21 @@ class Stabilizer:
         int = self.size
         state = Stabilizer(n=int,stabs=newstab)
         return state
-    def rref(self):
+    def rref(self, KU:int = 0, NL:int = 0):
         """
         Implements the RREF gauge procedure (details in doi.org/10.1088/1367-2630/7/1/170)
+
+        :param KU: Starting row
+        :type KU: int
+
+        :param NL: Starting column
+        :type NL: int
+
 
         """    
 
         N=self.size
         K=N
-        KU=0
-        NL=0
         while NL<N-1 and KU<K-1:
             zeroitem = True
             oneitem = False
@@ -825,8 +830,6 @@ class Stabilizer:
                             self.row_add(KU+1,i)
                 NL+=1
                 KU+=2
-
-
 if __name__ == "__main__":
     # Do something if this file is invoked on its own
     state = Stabilizer(edgelist = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]])

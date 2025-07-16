@@ -71,7 +71,7 @@ def heightfunction(state: Stabilizer):
 
     """        
 
-    rref(state)
+    state.rref()
     N=state.size
     leftmost = []
     for i in range(state.size):
@@ -99,7 +99,7 @@ def partial_height(state: Stabilizer,index: int):
     :rtype: int
 
     """    
-    rref(state)
+    state.rref()
     N=state.size
     leftmost = []
     for i in range(state.size):
@@ -285,7 +285,11 @@ def circuit_solver(state: Stabilizer):
             if target_state.tab[i,photonindex+N]!=0 or target_state.tab[i,photonindex]!=0:
                 if i!=row:
                     target_state.row_add(row,i)
-    rref(target_state)
+    for i in range(n_p,N):
+        target_state.clifford('swap',i,N-1)
+        target_state.rref(n_p,n_p)
+        target_state.clifford('swap',i,N-1)
+    target_state.rref()
     sums = []
     for i in range(n_p,N):
         sum=0
@@ -293,7 +297,6 @@ def circuit_solver(state: Stabilizer):
             if target_state.tab[i,j]!=0 or target_state.tab[i,j+N]!=0:
                 sum+=1
         sums.append(sum)
-    
     if max(sums)==1:
         decoupled = True
     else:
@@ -375,13 +378,12 @@ def circuit_solver(state: Stabilizer):
             target_state.clifford('X',i)
             protocol.append(['X',i])
     checker_state = Stabilizer(N)
-    if np.array_equal(checker_state.tab,target_state.tab) and np.array_equal(checker_state.signvector,target_state.signvector):
-        protocol = protocol[::-1]
-        return protocol
-    else:
-        print('Something went wrong')
-        print(target_state.stabilizers())
-        return None
+    try:
+        assert np.array_equal(checker_state.tab,target_state.tab) and np.array_equal(checker_state.signvector,target_state.signvector)
+    except:
+        raise AssertionError("Final state not computational zero state, here's what returned "+str(target_state.stabilizers()))
+    protocol = protocol[::-1]
+    return protocol
      
 def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
     """
@@ -534,7 +536,11 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
             if target_state.tab[i,photonindex+N]!=0 or target_state.tab[i,photonindex]!=0:
                 if i!=row:
                     target_state.row_add(row,i)
-    rref(target_state)
+    for i in range(n_p,N):
+        target_state.clifford('swap',i,N-1)
+        target_state.rref(n_p,n_p)
+        target_state.clifford('swap',i,N-1)
+    target_state.rref()
     sums = []
     for i in range(n_p,N):
         sum=0
@@ -542,12 +548,10 @@ def qiskit_circuit_solver(state: Stabilizer, simple: bool = False):
             if target_state.tab[i,j]!=0 or target_state.tab[i,j+N]!=0:
                 sum+=1
         sums.append(sum)
-    
     if max(sums)==1:
         decoupled = True
     else:
         decoupled = False
-    
     while not decoupled:
         for i in range(2,N):
             if i in sums:
